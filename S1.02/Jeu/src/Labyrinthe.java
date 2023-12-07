@@ -45,11 +45,34 @@ class Labyrinthe extends Program{
         return new char[1][1];
     } 
 
-    void deplacement(char[][] Lab, char direction){ //vérifie si déplacement possible, si oui l'effectue
-
+    void deplacement(char[][] Lab, char direction, int positionL, int positionC){ //vérifie si déplacement possible, si oui l'effectue
+        if(direction == 'z' && positionL-1 >= 0 && Lab[positionL-1][positionC] != '@'){ //déplacement haut
+            Lab[positionL][positionC] = '.';
+            if(Lab[positionL-1][positionC] == '.'){ //déplaceent si case vide
+                Lab[positionL-1][positionC] = 'P';
+            }
+        }
+        if(direction == 'z' && positionL+1 < length(Lab, 1) && Lab[positionL+1][positionC] != '@'){ //déplacement bas
+            Lab[positionL][positionC] = '.';
+            if(Lab[positionL+1][positionC] == '.'){ //déplaceent si case vide
+                Lab[positionL+1][positionC] = 'P';
+            }
+        }
+        if(direction == 'z' && positionC-1 >= 0 && Lab[positionC-1][positionC] != '@'){ //déplacement gauche
+            Lab[positionL][positionC] = '.';
+            if(Lab[positionC-1][positionC] == '.'){ //déplaceent si case vide
+                Lab[positionC-1][positionC] = 'P';
+            }
+        }
+        if(direction == 'z' && positionC+1 < length(Lab,2) && Lab[positionC+1][positionC] != '@'){ //déplacement droite
+            Lab[positionL][positionC] = '.';
+            if(Lab[positionC+1][positionC] == '.'){ //déplaceent si case vide
+                Lab[positionC+1][positionC] = 'P';
+            }
+        }
     }
 
-    void afficheLab(char[] Lab){ //affiche le Labyrinthe (@ = mur, P = perso, E = sortie, M = monstre, B = boss, S = shop)
+    void afficheLab(char[][] Lab){ //affiche le Labyrinthe (@ = mur, P = perso, E = sortie, M = monstre, B = boss, S = shop, . =c ase vide)
 
     }
 
