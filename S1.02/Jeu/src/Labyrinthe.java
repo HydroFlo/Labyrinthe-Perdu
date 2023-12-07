@@ -11,7 +11,20 @@ class Labyrinthe extends Program{
         return "" + q.question;
     }
 
-    String readFile(int longueur, extensions.File file){ //Lis un fichier le renvoie sous forme de chaine de caractère
+    int nbLignes(String cheminFichier){
+        int i = 1;
+        extensions.File file = newFile(cheminFichier);
+        String verif = readLine(file);
+        while(ready(file)){
+            i = i + 1;
+            verif = readLine(file);
+        }
+        return i;
+    }
+
+    String readFile(String cheminFichier){ //Lis un fichier le renvoie sous forme de chaine de caractère
+        extensions.File file = newFile(cheminFichier);
+        int longueur = nbLignes(cheminFichier);
         String res = "";
         for(int i = 0; i < longueur; i ++){
             res += readLine(file) + '\n';
@@ -19,8 +32,9 @@ class Labyrinthe extends Program{
         return res;
     }
 
-    void algorithm(){
-        print(readFile(23, newFile("ressources/img/Presentation.txt")));
+    int[] grille() 72 x 19
 
+    void algorithm(){
+        print(readFile("ressources/img/Presentation.txt"));
     }
 }
