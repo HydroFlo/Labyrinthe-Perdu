@@ -25,12 +25,18 @@ class Labyrinthe extends Program{
         return i;
     }
 
-    String readFile(String cheminFichier){ //Lis un fichier le renvoie sous forme de chaine de caractère
+    String readFile(String cheminFichier, boolean sertAffichage){ //Lis un fichier le renvoie sous forme de chaine de caractère
         extensions.File file = newFile(cheminFichier);
         int longueur = nbLignes(cheminFichier);
         String res = "";
-        for(int i = 0; i < longueur; i ++){
-            res += readLine(file) + '\n';
+        if(sertAffichage){
+            for(int i = 0; i < longueur; i ++){
+                res += readLine(file) + '\n';
+            }
+        } else {
+            for(int i = 0; i < longueur; i ++){
+                res += readLine(file);
+            }
         }
         return res;
     }
@@ -44,13 +50,14 @@ class Labyrinthe extends Program{
     }
 
     char[][] genererSalle(String cheminFichier){ // génère une grille d'une du labyrinthe d'après un fichier (taille 72x19)
-        char[][] lab = new char[72][19];
-        String salle = readFile(cheminFichier);
+        char[][] lab = new char[19][72];
+        String salle = readFile(cheminFichier, false);
+        print(readFile("ressources/Salle1", true));
+        int z = 0;
         for(int i = 0; i < nbLignes(cheminFichier); i ++){
-            int j = 0;
-            while(charAt(salle, j) != '\n'){
-                lab[i][j] = charAt(salle, j);
-                j = j + 1;
+            for(int j = 0; j < length(lab, 2); j ++){
+                lab[i][j] = charAt(salle, z);
+                z = z + 1;
             }
         }
         return lab;
@@ -90,7 +97,7 @@ class Labyrinthe extends Program{
     void afficheLab(char[][] Lab){ //affiche le Labyrinthe (@ = mur, P = perso, E = sortie, M = monstre, B = boss, S = shop, .  = case vide)
         for(int i =0; i<length(Lab,1);i++){
             for(int j =0; j<length(Lab,2);j++){
-                if(Lab[i][j]==' '){
+                if(Lab[i][j]=='.'){
                     print(' ');
                 }else{
                     print(Lab[i][j]);
@@ -102,7 +109,10 @@ class Labyrinthe extends Program{
 
     void algorithm(){
         genererLab(5); //genere le Layrinthe
-        print(readFile("ressources/img/Presentation.txt"));
+        print(readFile("ressources/img/Presentation.txt", true));
+        char[][] salle1 = genererSalle("ressources/Salle1");
+
+        afficheLab(salle1);
         // while(!jeufini()){
         //     char choix = ControleSaisie();
         //     if(choix == 'z' || choix == 'q' || choix == 's' || choix == 'd'){
