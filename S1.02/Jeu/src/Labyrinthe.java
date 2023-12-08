@@ -35,7 +35,7 @@ class Labyrinthe extends Program{
         return res;
     }
 
-    char ControleSaisie(){ // verifie que l'utilisateur saisisse bien 1 caractere
+    char controleSaisie(){ // verifie que l'utilisateur saisisse bien 1 caractere
         String choix;
         do{
             choix = readString();
