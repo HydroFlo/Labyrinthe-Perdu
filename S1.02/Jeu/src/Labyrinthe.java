@@ -7,8 +7,11 @@ class Labyrinthe extends Program{
         return q;
     }
     
-    String toString (Question q){ //Affiche l'énoncé de la question
+    String QuestiontoString (Question q){ //Affiche l'énoncé de la question
         return "" + q.question;
+    }
+    String ReponsetoString (Question q){ //Affiche la réponse de la question
+        return "" + q.reponse;
     }
 
     int nbLignes(String cheminFichier){
@@ -33,12 +36,11 @@ class Labyrinthe extends Program{
     }
 
     char ControleSaisie(){ // verifie que l'utilisateur saisisse bien 1 caractere
+        String choix;
         do{
-            String choix = readString();
-        }while(length(choix)== 1);
+            choix = readString();
+        }while(length(choix)!= 1);
         return charAt(choix, 0);
-
-
     }
 
     char[][] genererLab(int nbSalle){ // genere un Layrinthe de nbSalle salle et d'une taille de 72 x 19 par salle
@@ -72,18 +74,27 @@ class Labyrinthe extends Program{
         }
     }
 
-    void afficheLab(char[][] Lab){ //affiche le Labyrinthe (@ = mur, P = perso, E = sortie, M = monstre, B = boss, S = shop, . =c ase vide)
-
+    void afficheLab(char[][] Lab){ //affiche le Labyrinthe (@ = mur, P = perso, E = sortie, M = monstre, B = boss, S = shop, .  = case vide)
+        for(int i =0; i<length(Lab,1);i++){
+            for(int j =0; j<length(Lab,2);j++){
+                if(Lab[i][j]==' '){
+                    print(' ');
+                }else{
+                    print(Lab[i][j]);
+                }
+            }
+            println();
+        }
     }
 
     void algorithm(){
-        genererLab(int nbCase) //genere le Layrinthe
+        genererLab(5); //genere le Layrinthe
         print(readFile("ressources/img/Presentation.txt"));
-        while(!jeufini()){
-            char choix = ControleSaisie();
-            if(choix == 'z' || choix == 'q' || choix == 's' || choix == 'd'){
-                deplacement(jeu, choix);
-            }
-        }
+        // while(!jeufini()){
+        //     char choix = ControleSaisie();
+        //     if(choix == 'z' || choix == 'q' || choix == 's' || choix == 'd'){
+        //         deplacement(jeu, choix);
+        //     }
+        // }
     }
 }
