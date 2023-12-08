@@ -52,7 +52,6 @@ class Labyrinthe extends Program{
     char[][] genererSalle(String cheminFichier){ // génère une grille d'une du labyrinthe d'après un fichier (taille 72x19)
         char[][] lab = new char[19][72];
         String salle = readFile(cheminFichier, false);
-        print(readFile("ressources/Salle1", true));
         int z = 0;
         for(int i = 0; i < nbLignes(cheminFichier); i ++){
             for(int j = 0; j < length(lab, 2); j ++){
@@ -95,7 +94,10 @@ class Labyrinthe extends Program{
     }
 
     void afficheLab(char[][] Lab){ //affiche le Labyrinthe (@ = mur, P = perso, E = sortie, M = monstre, B = boss, S = shop, .  = case vide)
+        println("################################################################################"+ '\n' +
+                "################################################################################");
         for(int i =0; i<length(Lab,1);i++){
+            print("####");
             for(int j =0; j<length(Lab,2);j++){
                 if(Lab[i][j]=='.'){
                     print(' ');
@@ -103,15 +105,16 @@ class Labyrinthe extends Program{
                     print(Lab[i][j]);
                 }
             }
+            print("####");
             println();
         }
+        println("################################################################################");
     }
 
     void algorithm(){
         genererLab(5); //genere le Layrinthe
         print(readFile("ressources/img/Presentation.txt", true));
         char[][] salle1 = genererSalle("ressources/Salle1");
-
         afficheLab(salle1);
         // while(!jeufini()){
         //     char choix = ControleSaisie();
