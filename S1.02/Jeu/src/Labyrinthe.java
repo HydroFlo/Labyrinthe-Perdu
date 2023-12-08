@@ -109,5 +109,63 @@ class Labyrinthe extends Program{
         //         deplacement(jeu, choix);
         //     }
         // }
+
+        newQuestion("Quelle est la capital de la France", "paris");
+        newQuestion("Quel fleuve passe par Paris ?", "seine");
+        newQuestion("Qui est Guillaume Apollinaire ?", "poète");
+        // newQuestion("Quelle est la raison pour laquelle la Préhistoire a pris fin ?","l'écriture");
+        newQuestion("Quelle est la capitale du Danemark ?","Copenhague");
+        newQuestion("Combien y a-t-il de fautes dans cette phrase : \"Si tu réssidive, tu auras une sanktion ?\"","2");
+        newQuestion("Combien font 5 + 9","14");
+        newQuestion("\"On\" ou \"Ont\" : Ils ... un livre neuf.","ont");
+        newQuestion("\"On\" ou \"Ont\" : ... adore notre chat.","on");
+        newQuestion("\"On\" ou \"Ont\" : Ils ... préparé des surprises.","ont");
+        newQuestion("\"On\" ou \"Ont\" : ... arrive bientôt ?","on");
+        newQuestion("Ecrire en chiffre : trois-cent-vight-deux","322");
+        newQuestion("Ecrire en chiffre : six-cent-six","606");
+        newQuestion("Ecrire en chiffre : six-cent-soixante-dix-neuf","679");
+        newQuestion("Ecrire en chiffre : soixante-neuf","69");
+        newQuestion("Ecrire en chiffre : quatre-cent-quatre-vingts","420");
+        newQuestion("Ecrire en lettre : 491","quatre-cent-quatre-vingt-onze");
+        newQuestion("Ecrire en lettre : 8","huit");
+        newQuestion("Ecrire en lettre : 99","quatre-vingt-dix-neuf");
+        newQuestion("A quel temps est conjugé cette phrase : \"Tu comprendras plus tard.\"","futur");
+        newQuestion("A quel temps est conjugé cette phrase : \"Je vais manger chez un ami.\"","présent");
+        newQuestion("A quel temps est conjugé cette phrase : \"Qu'as tu fais ?\"","passé composé");
+        newQuestion("A quel temps est conjugé cette phrase : \"Ca été ?\"","passé");
+        newQuestion("","");
+        newQuestion("","");
+        newQuestion("","");
+        newQuestion("","");
+        newQuestion("","");
+        newQuestion("","");
+        newQuestion("","");chiffre romain
+        newQuestion("","");
+        newQuestion("","");
+        newQuestion("","");
+        newQuestion("","");
+        newQuestion("","");
+        newQuestion("","");
+        newQuestion("","");
+        newQuestion("","");
+        newQuestion("","");
+        newQuestion("","");
+        newQuestion("","");
+        newQuestion("","");
+        newQuestion("","");
+        newQuestion("","");
+        newQuestion("","");
+        newQuestion("","");
+        newQuestion("","");
+        newQuestion("","");
+        newQuestion("","");
+        newQuestion("","");
+        newQuestion("","");
+        newQuestion("","");
+        newQuestion("","");
+        newQuestion("","");
+        newQuestion("","");
+
+        
     }
 }
