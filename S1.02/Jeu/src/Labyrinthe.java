@@ -43,6 +43,19 @@ class Labyrinthe extends Program{
         return charAt(choix, 0);
     }
 
+    char[][] genererSalle(String cheminFichier){ // génère une grille d'une du labyrinthe d'après un fichier (taille 72x19)
+        char[][] lab = new char[72][19];
+        String salle = readFile(cheminFichier);
+        for(int i = 0; i < nbLignes(cheminFichier); i ++){
+            int j = 0;
+            while(charAt(salle, j) != '\n'){
+                lab[i][j] = charAt(salle, j);
+                j = j + 1;
+            }
+        }
+        return lab;
+    }
+
     char[][] genererLab(int nbSalle){ // genere un Layrinthe de nbSalle salle et d'une taille de 72 x 19 par salle
         return new char[1][1];
     } 
