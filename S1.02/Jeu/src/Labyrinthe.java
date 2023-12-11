@@ -73,19 +73,19 @@ class Labyrinthe extends Program{
                 Lab[positionL-1][positionC] = 'P';
             }
         }
-        if(direction == 'z' && positionL+1 < length(Lab, 1) && Lab[positionL+1][positionC] != '@'){ //déplacement bas
+        if(direction == 's' && positionL+1 < length(Lab, 1) && Lab[positionL+1][positionC] != '@'){ //déplacement bas
             Lab[positionL][positionC] = '.';
             if(Lab[positionL+1][positionC] == '.'){ //déplacement si case vide
                 Lab[positionL+1][positionC] = 'P';
             }
         }
-        if(direction == 'z' && positionC-1 >= 0 && Lab[positionC-1][positionC] != '@'){ //déplacement gauche
+        if(direction == 'q' && positionC-1 >= 0 && Lab[positionC-1][positionC] != '@'){ //déplacement gauche
             Lab[positionL][positionC] = '.';
             if(Lab[positionL][positionC-1] == '.'){ //déplacement si case vide
                 Lab[positionL][positionC-1] = 'P';
             }
         }
-        if(direction == 'z' && positionC+1 < length(Lab,2) && Lab[positionC+1][positionC] != '@'){ //déplacement droite
+        if(direction == 'd' && positionC+1 < length(Lab,2) && Lab[positionC+1][positionC] != '@'){ //déplacement droite
             Lab[positionL][positionC] = '.';
             if(Lab[positionL][positionC+1] == '.'){ //déplacement si case vide
                 Lab[positionL][positionC+1] = 'P';
@@ -116,6 +116,9 @@ class Labyrinthe extends Program{
         print(readFile("ressources/img/Presentation.txt", true));
         char[][] salle1 = genererSalle("ressources/Salle1");
         afficheLab(salle1);
+        salle1[18][71] = 'P';
+        afficheLab(salle1);
+        
         // while(!jeufini()){
         //     char choix = ControleSaisie();
         //     if(choix == 'z' || choix == 'q' || choix == 's' || choix == 'd'){
@@ -152,7 +155,7 @@ class Labyrinthe extends Program{
         newQuestion("","");
         newQuestion("","");
         newQuestion("","");
-        newQuestion("","");chiffre romain
+        newQuestion("","");//chiffre romain
         newQuestion("","");
         newQuestion("","");
         newQuestion("","");
