@@ -149,11 +149,11 @@ class Labyrinthe extends Program{
         newQuestion("A quel temps est conjugé cette phrase : \"Je vais manger chez un ami.\"","présent");
         newQuestion("A quel temps est conjugé cette phrase : \"Qu'as tu fais ?\"","passé composé");
         newQuestion("A quel temps est conjugé cette phrase : \"Ca été ?\"","passé");
-        newQuestion("","");
-        newQuestion("","");
-        newQuestion("","");
-        newQuestion("","");
-        newQuestion("","");
+        newQuestion("Convertir 1548 dg en mg.","154800");
+        newQuestion("Convertir 10599 hg en cg.","105990000");
+        newQuestion("Convertir 10 cm en m.","0,1");
+        newQuestion("En quelle année l'Amérique à été découverte ?","1492");
+        newQuestion("Qui à découvert l'Amérique ?","Christophe Colomb");
         newQuestion("","");
         newQuestion("","");//chiffre romain
         newQuestion("","");
