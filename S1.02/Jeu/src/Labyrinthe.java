@@ -179,33 +179,6 @@ class Labyrinthe extends Program{
         newQuestion("Convertir 10 cm en m.","0,1");
         newQuestion("En quelle année l'Amérique à été découverte ?","1492");
         newQuestion("Qui à découvert l'Amérique ?","Christophe Colomb");
-        newQuestion("","");
-        newQuestion("","");//chiffre romain
-        newQuestion("","");
-        newQuestion("","");
-        newQuestion("","");
-        newQuestion("","");
-        newQuestion("","");
-        newQuestion("","");
-        newQuestion("","");
-        newQuestion("","");
-        newQuestion("","");
-        newQuestion("","");
-        newQuestion("","");
-        newQuestion("","");
-        newQuestion("","");
-        newQuestion("","");
-        newQuestion("","");
-        newQuestion("","");
-        newQuestion("","");
-        newQuestion("","");
-        newQuestion("","");
-        newQuestion("","");
-        newQuestion("","");
-        newQuestion("","");
-        newQuestion("","");
-        newQuestion("","");
-        newQuestion("","");
 
         
     }
