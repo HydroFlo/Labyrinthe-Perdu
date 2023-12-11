@@ -121,7 +121,7 @@ class Labyrinthe extends Program{
     }
 
     void algorithm(){
-        genererLab(5); //genere le Layrinthe
+        //genererLab(5); //genere le Layrinthe
         print(readFile("ressources/img/Presentation.txt", true));
         char[][] salle1 = genererSalle("ressources/Lab/Salle1");
         afficheLab(salle1);
