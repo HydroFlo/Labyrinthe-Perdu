@@ -70,31 +70,36 @@ class Labyrinthe extends Program{
         return(tab);
     } 
 
-    void deplacement(char[][] Lab, char direction, int positionL, int positionC){ //vérifie si déplacement possible, si oui l'effectue
+    int[] deplacement(char[][] Lab, char direction, int positionL, int positionC){ //vérifie si déplacement possible, si oui l'effectue
         if(direction == 'z' && positionL-1 >= 0 && Lab[positionL-1][positionC] != '@'){ //déplacement haut
             Lab[positionL][positionC] = '.';
             if(Lab[positionL-1][positionC] == '.'){ //déplacement si case vide
                 Lab[positionL-1][positionC] = 'P';
+                return new int[]{positionL-1, positionC};
             }
         }
         if(direction == 's' && positionL+1 < length(Lab, 1) && Lab[positionL+1][positionC] != '@'){ //déplacement bas
             Lab[positionL][positionC] = '.';
             if(Lab[positionL+1][positionC] == '.'){ //déplacement si case vide
                 Lab[positionL+1][positionC] = 'P';
+                return new int[]{positionL+1, positionC};
             }
         }
-        if(direction == 'q' && positionC-1 >= 0 && Lab[positionC-1][positionC] != '@'){ //déplacement gauche
+        if(direction == 'q' && positionC-1 >= 0 && Lab[positionL][positionC-1] != '@'){ //déplacement gauche
             Lab[positionL][positionC] = '.';
             if(Lab[positionL][positionC-1] == '.'){ //déplacement si case vide
                 Lab[positionL][positionC-1] = 'P';
+                return new int[]{positionL, positionC-1};
             }
         }
-        if(direction == 'd' && positionC+1 < length(Lab,2) && Lab[positionC+1][positionC] != '@'){ //déplacement droite
+        if(direction == 'd' && positionC+1 < length(Lab,2) && Lab[positionL][positionC+1] != '@'){ //déplacement droite
             Lab[positionL][positionC] = '.';
             if(Lab[positionL][positionC+1] == '.'){ //déplacement si case vide
                 Lab[positionL][positionC+1] = 'P';
+                return new int[]{positionL, positionC+1};
             }
         }
+        return new int[]{positionL, positionC};
     }
 
     void afficheLab(char[][] Lab){ //affiche le Labyrinthe (@ = mur, P = perso, E = sortie, M = monstre, B = boss, S = shop, .  = case vide)
@@ -120,7 +125,23 @@ class Labyrinthe extends Program{
         print(readFile("ressources/img/Presentation.txt", true));
         char[][] salle1 = genererSalle("ressources/Salle1");
         afficheLab(salle1);
-        salle1[18][71] = 'P';
+        salle1[17][70] = 'P';
+        int[] indiceP = new int[]{17,70};
+        afficheLab(salle1);
+        char choix = controleSaisie();
+        indiceP = deplacement(salle1, choix, indiceP[0], indiceP[1]);
+        afficheLab(salle1);
+        choix = controleSaisie();
+        indiceP = deplacement(salle1, choix, indiceP[0], indiceP[1]);
+        afficheLab(salle1);
+        choix = controleSaisie();
+        indiceP = deplacement(salle1, choix, indiceP[0], indiceP[1]);
+        afficheLab(salle1);
+        choix = controleSaisie();
+        indiceP = deplacement(salle1, choix, indiceP[0], indiceP[1]);
+        afficheLab(salle1);
+        choix = controleSaisie();
+        indiceP = deplacement(salle1, choix, indiceP[0], indiceP[1]);
         afficheLab(salle1);
         
         // while(!jeufini()){
