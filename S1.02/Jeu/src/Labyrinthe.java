@@ -123,7 +123,7 @@ class Labyrinthe extends Program{
     void algorithm(){
         genererLab(5); //genere le Layrinthe
         print(readFile("ressources/img/Presentation.txt", true));
-        char[][] salle1 = genererSalle("ressources/Salle1");
+        char[][] salle1 = genererSalle("ressources/Lab/Salle1");
         afficheLab(salle1);
         salle1[17][70] = 'P';
         int[] indiceP = new int[]{17,70};
