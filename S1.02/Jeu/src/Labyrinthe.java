@@ -62,13 +62,13 @@ class Labyrinthe extends Program{
         return lab;
     }
 
-    char[][] genererLab(int nbSalle){ // genere un Layrinthe de nbSalle salle et d'une taille de 72 x 19 par salle
+    /*char[][] genererLab(int nbSalle){ // genere un Layrinthe de nbSalle salle et d'une taille de 72 x 19 par salle
         char[][]new char[nbSalle][nbSalle]{
             
         }
         
         return(tab);
-    } 
+    } */
 
     int[] deplacement(char[][] Lab, char direction, int positionL, int positionC){ //vérifie si déplacement possible, si oui l'effectue
         if(direction == 'z' && positionL-1 >= 0 && Lab[positionL-1][positionC] != '@'){ //déplacement haut
