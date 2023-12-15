@@ -1,4 +1,25 @@
 class Labyrinthe extends Program{
+    
+    Salle[] salles = new Salle[]={
+                                    newSalle(1,"0101"),
+                                    newSalle(2,"1111"),
+                                    newSalle(3,"0101"),
+                                    newSalle(4,"1010"),
+                                    newSalle(5,"1101"),
+                                    newSalle(6,"1100"),
+                                    newSalle(7,"1001"),
+                                    newSalle(8,"1011"),
+                                    newSalle(9,"0011"),
+                                    newSalle(10,"0110")
+                                };
+    
+
+    Salle newSalle(int numero, String sorties){
+        Salle s = new Salle();
+        s.numero=numero;
+        s.sorties=sorties;
+        return(s);
+    }
 
     Question newQuestion(String question, String reponse){ //Implémente une fonction et sa réponse
         Question q = new Question();
@@ -62,13 +83,25 @@ class Labyrinthe extends Program{
         return lab;
     }
 
-    /*char[][] genererLab(int nbSalle){ // genere un Layrinthe de nbSalle salle et d'une taille de 72 x 19 par salle
-        char[][]new char[nbSalle][nbSalle]{
-            
+    String veriferVoisins(Salle[][] lab, int i, int j){
+        String resultat = "";
+        if (lab[i-1][j]!=null){
+             
         }
-        
+    }
+
+    char[][] genererLab(int nbSalle){ // genere un Layrinthe de nbSalle salle et d'une taille de 72 x 19 par salle !!!! IL FAUT QUE LE nbSalle SOINT IMPAIRE !!!!
+        Salle[][] lab = new Salle[nbSalle][nbSalle];
+        lab[(nbSalle/2)+1][(nbSalle/2)+1] = salles[2];
+        for(int i=0;i<length(lab,1);i++){
+            for(int j=0;j<length(lab,2);j++){
+                if(lab[i][j]==null){
+
+                }
+            }
+        }
         return(tab);
-    } */
+    }
 
     int[] deplacement(char[][] Lab, char direction, int positionL, int positionC){ //vérifie si déplacement possible, si oui l'effectue
         if(direction == 'z' && positionL-1 >= 0 && Lab[positionL-1][positionC] != '@'){ //déplacement haut
