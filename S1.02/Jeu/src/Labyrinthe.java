@@ -104,6 +104,12 @@ class Labyrinthe extends Program{
                 Lab[positionL][positionC] = '.';
                 Lab[positionL][positionC-1] = 'P';
                 return new int[]{positionL, positionC-1};
+            } else if (Lab[positionL][positionC-1] == 'M'){
+                Question q = newQuestion("Quelle est la capital de la France", "paris");
+                afficheQuestion(q, true);
+                if(questionCorrect(q)){ //En cas de bonne réponse efface le monstre
+                    Lab[positionL][positionC-1] = '.';
+                }
             }
         }
 
@@ -112,6 +118,12 @@ class Labyrinthe extends Program{
                 Lab[positionL][positionC] = '.';
                 Lab[positionL][positionC+1] = 'P';
                 return new int[]{positionL, positionC+1};
+            } else if (Lab[positionL][positionC+1] == 'M'){
+                Question q = newQuestion("Quelle est la capital de la France", "paris");
+                afficheQuestion(q, true);
+                if(questionCorrect(q)){ //En cas de bonne réponse efface le monstre
+                    Lab[positionL][positionC+1] = '.';
+                }
             }
         }
         return new int[]{positionL, positionC};
@@ -141,7 +153,7 @@ class Labyrinthe extends Program{
         assertEquals(verif, formatIntituler(test, 48, 12));
     }        
 
-    void afficheIntituler(String intituler){
+    void afficheIntituler(String intituler){ //prend une chaine et l'affiche selon la forme d'affichage des question (voir ressource)
         print("                ");
         for(int i = 0; i < length(intituler); i ++){
             print(charAt(intituler, i));
@@ -155,14 +167,14 @@ class Labyrinthe extends Program{
 
     void afficheQuestion(Question q, boolean reponseLibre){
         println("################################################################################" + '\n' +
-                 "####@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@####" + '\n' +
-                 "####@                                                                      @####");
+                "####@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@####" + '\n' +
+                "####@                                                                      @####");
         String intituler = formatIntituler(q.question, 48*4, 48);
         afficheIntituler(intituler);
         if(reponseLibre){
             println("####@                                                                      @####" + '\n' +
-                     "####@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@####" + '\n' +
-                     "################################################################################");
+                    "####@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@####" + '\n' +
+                    "################################################################################");
             for(int i = 0; i < 13; i ++){
                 println();
             }
