@@ -107,7 +107,7 @@ class Labyrinthe extends Program{
         return new int[]{positionL, positionC};
     }
 
-    String formatIntituler(String intituler, int tailleTotal, int tailleLigne){
+    String formatIntituler(String intituler, int tailleTotal, int tailleLigne){ //prend une chaine de caractère et la renvoie sous le format donné
         String res = "";
         int format = 0;
         for(int longueur = 0; longueur < tailleTotal; longueur ++){
@@ -131,12 +131,24 @@ class Labyrinthe extends Program{
         assertEquals(verif, formatIntituler(test, 48, 12));
     }        
 
-    void afficheQuestion(String question){
+    void afficheIntituler(String intituler){
+        print("                ");
+        for(int i = 0; i < length(intituler); i ++){
+            print(charAt(intituler, i));
+            if(charAt(intituler, i) == '\n'){
+                print("                ");
+            }
+        }
+        println();
+    }
+
+
+    void afficheQuestion(Question q){
         println("################################################################################" + '\n' +
                  "####@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@####" + '\n' +
                  "####@                                                                      @####");
-        print("####@");
-        //afficheIntituler(question);
+        String intituler = formatIntituler(q.question, 48*4, 48);
+        //afficheIntituler(q);
 
     }
 
@@ -173,29 +185,31 @@ class Labyrinthe extends Program{
         return new int[]{0,0};
     }
 
-    void _algorithm(){
+    void algorithm(){
         //genererLab(5); //genere le Layrinthe
         print(readFile("ressources/img/Presentation.txt", true));
         char[][] salle1 = genererSalle("ressources/Lab/Salle1");
-        afficheLab(salle1);
-        int[] indiceP = indiceDe('P', salle1);
-        salle1[indiceP[0]-1][indiceP[1]] = 'M';
-        afficheLab(salle1);
-        char choix = controleSaisie();
-        indiceP = deplacement(salle1, choix, indiceP[0], indiceP[1]);
-        afficheLab(salle1);
-        choix = controleSaisie();
-        indiceP = deplacement(salle1, choix, indiceP[0], indiceP[1]);
-        afficheLab(salle1);
-        choix = controleSaisie();
-        indiceP = deplacement(salle1, choix, indiceP[0], indiceP[1]);
-        afficheLab(salle1);
-        choix = controleSaisie();
-        indiceP = deplacement(salle1, choix, indiceP[0], indiceP[1]);
-        afficheLab(salle1);
-        choix = controleSaisie();
-        indiceP = deplacement(salle1, choix, indiceP[0], indiceP[1]);
-        afficheLab(salle1);
+        String verif = "abcdefghijkl" +'\n' + "mnopqrstuvwx" + '\n' + "yzABCDEFGHIJ" + '\n' + "KLMNOP      ";
+        afficheIntituler(verif);
+        //afficheLab(salle1);
+        //int[] indiceP = indiceDe('P', salle1);
+        //salle1[indiceP[0]-1][indiceP[1]] = 'M';
+        //afficheLab(salle1);
+        //char choix = controleSaisie();
+        //indiceP = deplacement(salle1, choix, indiceP[0], indiceP[1]);
+        //afficheLab(salle1);
+        //choix = controleSaisie();
+        //indiceP = deplacement(salle1, choix, indiceP[0], indiceP[1]);
+        //afficheLab(salle1);
+        //choix = controleSaisie();
+        //indiceP = deplacement(salle1, choix, indiceP[0], indiceP[1]);
+        //afficheLab(salle1);
+        //choix = controleSaisie();
+        //indiceP = deplacement(salle1, choix, indiceP[0], indiceP[1]);
+        //afficheLab(salle1);
+        //choix = controleSaisie();
+        //indiceP = deplacement(salle1, choix, indiceP[0], indiceP[1]);
+        //afficheLab(salle1);
         
         // while(!jeufini()){
         //     char choix = ControleSaisie();
