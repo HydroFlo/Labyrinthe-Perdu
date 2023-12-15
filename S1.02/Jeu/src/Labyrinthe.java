@@ -1,6 +1,6 @@
 class Labyrinthe extends Program{
     
-    Salle[] salles = new Salle[]={
+    Salle[] salles = new Salle[]{
                                     newSalle(1,"0101"),
                                     newSalle(2,"1111"),
                                     newSalle(3,"0101"),
@@ -85,22 +85,61 @@ class Labyrinthe extends Program{
 
     String veriferVoisins(Salle[][] lab, int i, int j){
         String resultat = "";
-        if (lab[i-1][j]!=null){
-             
-        }
+        if (i<length(lab,1) && i>=1 && lab[i-1][j]!=null){
+            resultat = resultat + lab[i-1][j].sorties;
+        }else{resultat=resultat+"EEEE";}
+        if (j<length(lab,2)-1 && lab[i][j+1]!=null){
+            resultat = resultat + lab[i][j+1].sorties;
+        }else{resultat=resultat+"EEEE";}
+        if (i<length(lab,1)-1 && lab[i+1][j]!=null){
+            resultat = resultat + lab[i+1][j].sorties;
+        }else{resultat=resultat+"EEEE";}
+        if (j<length(lab,2)&& j>=1 && lab[i][j-1]!=null){
+            resultat = resultat + lab[i][j-1].sorties;
+        }else{resultat=resultat+"EEEE";}
+        println(resultat);
+        return(resultat);
     }
 
-    char[][] genererLab(int nbSalle){ // genere un Layrinthe de nbSalle salle et d'une taille de 72 x 19 par salle !!!! IL FAUT QUE LE nbSalle SOINT IMPAIRE !!!!
+    void choisirSalle(Salle[][] lab, int i, int j){
+        String resultat="";
+        String check = veriferVoisins(lab,i,j);
+        String haut = substring(check,0,4);
+        String droite = substring(check,4,8);
+        String bas = substring(check,8,12);
+        String gauche = substring(check,12,16);
+        if(charAt(haut,2)=='1'){
+            resultat=resultat+'1';
+        }else{resultat=resultat+'.';}
+        if(charAt(droite,3)=='1'){
+            resultat=resultat+'1';
+        }else{resultat=resultat+'.';}
+        if(charAt(bas,0)=='1'){
+            resultat=resultat+'1';
+            }else{resultat=resultat+'.';}
+        if(charAt(gauche,1)=='1'){
+            resultat=resultat+'1';
+        }else{resultat=resultat+'.';}
+        println(resultat);
+        int nbalea=(int)(random()*10);
+        // while(!equals(salles[nbalea].sorties,resultat)){
+        //     nbalea=(int)(random()*10);
+        //     print(" trou de cul " + nbalea);
+        // }
+        lab[i][j]=salles[nbalea];
+    }
+
+    Salle[][] genererLab(int nbSalle){ // genere un Layrinthe de nbSalle salle et d'une taille de 72 x 19 par salle !!!! IL FAUT QUE LE nbSalle SOINT IMPAIRE !!!!
         Salle[][] lab = new Salle[nbSalle][nbSalle];
         lab[(nbSalle/2)+1][(nbSalle/2)+1] = salles[2];
         for(int i=0;i<length(lab,1);i++){
             for(int j=0;j<length(lab,2);j++){
                 if(lab[i][j]==null){
-
+                    choisirSalle(lab,i,j);
                 }
             }
         }
-        return(tab);
+        return(lab);
     }
 
     int[] deplacement(char[][] Lab, char direction, int positionL, int positionC){ //vérifie si déplacement possible, si oui l'effectue
@@ -250,7 +289,7 @@ class Labyrinthe extends Program{
     }
 
     void algorithm(){
-        //genererLab(5); //genere le Layrinthe
+        genererLab(5); //genere le Layrinthe
         print(readFile("ressources/img/Presentation.txt", true));
         String lancer = readString();
         while(lancer != ""){
