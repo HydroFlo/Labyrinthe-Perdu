@@ -187,7 +187,7 @@ class Labyrinthe extends Program{
         return equals(res, q.reponse);
     }
 
-    void afficheLab(char[][] Lab){ //affiche le Labyrinthe (@ = mur, P = perso, E = sortie, M = monstre, B = boss, S = shop, .  = case vide)
+    void afficheLab(char[][] Lab){ //affiche le Labyrinthe (@ = mur, P = perso, S = sortie, M = monstre, B = boss, 🏠 = shop, .  = case vide)
         println("################################################################################"+ '\n' +
                 "################################################################################");
         for(int i =0; i<length(Lab,1);i++){

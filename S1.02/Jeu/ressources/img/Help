@@ -3,19 +3,19 @@
 ####                                                                        ####
 ####                               Contrôle :                               ####
 ####                                                                        ####
+####                                Z = haut                                ####
+####           Q = gauche                              D = droite           ####
+####                                S = bas                                 ####
 ####                                                                        ####
 ####                                                                        ####
+####                        Information à l'écran :                         ####
 ####                                                                        ####
-####         Z = haut                                                       ####
-####         Q = gauche                                                     ####
-####         S = bas                                                        ####
-####         D = droite                                                     ####
-####                                                                        ####
-####                                                                        ####
-####                                                                        ####
-####                                                                        ####
-####                                                                        ####
-####                                                                        ####
+####      P = votre position                                                ####
+####      M = monstre, les battre rapporte des points                       ####
+####      S = Sortie                                                        ####
+####      B = Boss, le battre met fin au jeu                                ####
+####      @ = murs                                                          ####
+####      🏠 = Magasin (actuellement indisponible)                          ####
 ####                                                                        ####
 ####                                                                        ####
 ####                                                                        ####
