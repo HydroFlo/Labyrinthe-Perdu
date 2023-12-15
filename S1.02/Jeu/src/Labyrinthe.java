@@ -76,7 +76,12 @@ class Labyrinthe extends Program{
             if(Lab[positionL-1][positionC] == '.'){ //déplacement si case vide
                 Lab[positionL-1][positionC] = 'P';
                 return new int[]{positionL-1, positionC};
-            }
+            }/* else if(Lab[positionL-1][positionC] == 'M'){ //Si Monstre, affiche la question.
+                afficheQuestion();
+                if(questionCorrect()){ //En cas de bonne réponse efface le monstre
+                    Lab[positionL-1][positionC] = '.';
+                }*/
+            
         }
         if(direction == 's' && positionL+1 < length(Lab, 1) && Lab[positionL+1][positionC] != '@'){ //déplacement bas
             Lab[positionL][positionC] = '.';
@@ -100,6 +105,43 @@ class Labyrinthe extends Program{
             }
         }
         return new int[]{positionL, positionC};
+    }
+
+    String formatIntituler(String intituler, int tailleTotal, int tailleLigne){
+        String res = "";
+        int format = 0;
+        for(int longueur = 0; longueur < tailleTotal; longueur ++){
+            if(longueur < length(intituler)){
+                res += charAt(intituler, longueur);
+            } else {
+                res += " ";
+            }
+            format += 1;
+            if(format == tailleLigne && longueur != tailleTotal-1){
+                res += '\n';
+                format = 0;
+            }
+        }
+        return res;
+    }
+
+    void testFormatIntituler(){
+        String test = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOP";
+        String verif = "abcdefghijkl" +'\n' + "mnopqrstuvwx" + '\n' + "yzABCDEFGHIJ" + '\n' + "KLMNOP      ";
+        assertEquals(verif, formatIntituler(test, 48, 12));
+    }        
+
+    void afficheQuestion(String question){
+        println("################################################################################" + '\n' +
+                 "####@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@####" + '\n' +
+                 "####@                                                                      @####");
+        print("####@");
+        //afficheIntituler(question);
+
+    }
+
+    boolean questionCorrect(){ //Vérifie si on donne la bonne réponse
+        return true;
     }
 
     void afficheLab(char[][] Lab){ //affiche le Labyrinthe (@ = mur, P = perso, E = sortie, M = monstre, B = boss, S = shop, .  = case vide)
@@ -131,12 +173,13 @@ class Labyrinthe extends Program{
         return new int[]{0,0};
     }
 
-    void algorithm(){
+    void _algorithm(){
         //genererLab(5); //genere le Layrinthe
         print(readFile("ressources/img/Presentation.txt", true));
         char[][] salle1 = genererSalle("ressources/Lab/Salle1");
         afficheLab(salle1);
         int[] indiceP = indiceDe('P', salle1);
+        salle1[indiceP[0]-1][indiceP[1]] = 'M';
         afficheLab(salle1);
         char choix = controleSaisie();
         indiceP = deplacement(salle1, choix, indiceP[0], indiceP[1]);
