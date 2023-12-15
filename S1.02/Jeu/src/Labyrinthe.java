@@ -120,13 +120,23 @@ class Labyrinthe extends Program{
         println("################################################################################");
     }
 
+    int[] indiceDe(char c, char[][] tab){ //revoie les indices d'un caractère dans un tableau de caractère
+        for(int i = 0; i < length(tab, 1); i ++){
+            for(int j = 0; j < length(tab, 2); j ++){
+                if(tab[i][j] == c){
+                    return new int[]{i,j};
+                }
+            }
+        }
+        return new int[]{0,0};
+    }
+
     void algorithm(){
         //genererLab(5); //genere le Layrinthe
         print(readFile("ressources/img/Presentation.txt", true));
         char[][] salle1 = genererSalle("ressources/Lab/Salle1");
         afficheLab(salle1);
-        salle1[17][70] = 'P';
-        int[] indiceP = new int[]{17,70};
+        int[] indiceP = indiceDe('P', salle1);
         afficheLab(salle1);
         char choix = controleSaisie();
         indiceP = deplacement(salle1, choix, indiceP[0], indiceP[1]);
