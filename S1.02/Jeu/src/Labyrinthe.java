@@ -72,34 +72,44 @@ class Labyrinthe extends Program{
 
     int[] deplacement(char[][] Lab, char direction, int positionL, int positionC){ //vérifie si déplacement possible, si oui l'effectue
         if(direction == 'z' && positionL-1 >= 0 && Lab[positionL-1][positionC] != '@'){ //déplacement haut
-            Lab[positionL][positionC] = '.';
             if(Lab[positionL-1][positionC] == '.'){ //déplacement si case vide
+                Lab[positionL][positionC] = '.';
                 Lab[positionL-1][positionC] = 'P';
                 return new int[]{positionL-1, positionC};
-            }/* else if(Lab[positionL-1][positionC] == 'M'){ //Si Monstre, affiche la question.
-                afficheQuestion();
-                if(questionCorrect()){ //En cas de bonne réponse efface le monstre
+            } else if(Lab[positionL-1][positionC] == 'M'){ //Si Monstre, affiche la question.
+                Question q = newQuestion("Quelle est la capital de la France", "paris");
+                afficheQuestion(q, true);
+                if(questionCorrect(q)){ //En cas de bonne réponse efface le monstre
                     Lab[positionL-1][positionC] = '.';
-                }*/
-            
-        }
-        if(direction == 's' && positionL+1 < length(Lab, 1) && Lab[positionL+1][positionC] != '@'){ //déplacement bas
-            Lab[positionL][positionC] = '.';
-            if(Lab[positionL+1][positionC] == '.'){ //déplacement si case vide
-                Lab[positionL+1][positionC] = 'P';
-                return new int[]{positionL+1, positionC};
+                }
             }
         }
+
+        if(direction == 's' && positionL+1 < length(Lab, 1) && Lab[positionL+1][positionC] != '@'){ //déplacement bas
+            if(Lab[positionL+1][positionC] == '.'){ //déplacement si case vide
+                Lab[positionL][positionC] = '.';
+                Lab[positionL+1][positionC] = 'P';
+                return new int[]{positionL+1, positionC};
+            } else if (Lab[positionL+1][positionC] == 'M'){
+                Question q = newQuestion("Quelle est la capital de la France", "paris");
+                afficheQuestion(q, true);
+                if(questionCorrect(q)){ //En cas de bonne réponse efface le monstre
+                    Lab[positionL+1][positionC] = '.';
+                }
+            }
+        }
+
         if(direction == 'q' && positionC-1 >= 0 && Lab[positionL][positionC-1] != '@'){ //déplacement gauche
-            Lab[positionL][positionC] = '.';
             if(Lab[positionL][positionC-1] == '.'){ //déplacement si case vide
+                Lab[positionL][positionC] = '.';
                 Lab[positionL][positionC-1] = 'P';
                 return new int[]{positionL, positionC-1};
             }
         }
+
         if(direction == 'd' && positionC+1 < length(Lab,2) && Lab[positionL][positionC+1] != '@'){ //déplacement droite
-            Lab[positionL][positionC] = '.';
             if(Lab[positionL][positionC+1] == '.'){ //déplacement si case vide
+                Lab[positionL][positionC] = '.';
                 Lab[positionL][positionC+1] = 'P';
                 return new int[]{positionL, positionC+1};
             }
@@ -143,17 +153,26 @@ class Labyrinthe extends Program{
     }
 
 
-    void afficheQuestion(Question q){
+    void afficheQuestion(Question q, boolean reponseLibre){
         println("################################################################################" + '\n' +
                  "####@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@####" + '\n' +
                  "####@                                                                      @####");
         String intituler = formatIntituler(q.question, 48*4, 48);
-        //afficheIntituler(q);
+        afficheIntituler(intituler);
+        if(reponseLibre){
+            println("####@                                                                      @####" + '\n' +
+                     "####@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@####" + '\n' +
+                     "################################################################################");
+            for(int i = 0; i < 13; i ++){
+                println();
+            }
+        }
 
     }
 
-    boolean questionCorrect(){ //Vérifie si on donne la bonne réponse
-        return true;
+    boolean questionCorrect(Question q){ //Vérifie si on donne la bonne réponse
+        String res = readString();
+        return equals(res, q.reponse);
     }
 
     void afficheLab(char[][] Lab){ //affiche le Labyrinthe (@ = mur, P = perso, E = sortie, M = monstre, B = boss, S = shop, .  = case vide)
@@ -188,19 +207,23 @@ class Labyrinthe extends Program{
     void algorithm(){
         //genererLab(5); //genere le Layrinthe
         print(readFile("ressources/img/Presentation.txt", true));
+        String lancer = readString();
+        while(lancer != ""){
+            print(readFile("ressources/img/Presentation.txt", true));
+            lancer = readString();
+        }
         char[][] salle1 = genererSalle("ressources/Lab/Salle1");
-        String verif = "abcdefghijkl" +'\n' + "mnopqrstuvwx" + '\n' + "yzABCDEFGHIJ" + '\n' + "KLMNOP      ";
-        afficheIntituler(verif);
-        //afficheLab(salle1);
-        //int[] indiceP = indiceDe('P', salle1);
-        //salle1[indiceP[0]-1][indiceP[1]] = 'M';
-        //afficheLab(salle1);
-        //char choix = controleSaisie();
-        //indiceP = deplacement(salle1, choix, indiceP[0], indiceP[1]);
-        //afficheLab(salle1);
-        //choix = controleSaisie();
-        //indiceP = deplacement(salle1, choix, indiceP[0], indiceP[1]);
-        //afficheLab(salle1);
+        Question q = newQuestion("Quelle est la capital de la France", "paris");
+        afficheLab(salle1);
+        int[] indiceP = indiceDe('P', salle1);
+        salle1[indiceP[0]-1][indiceP[1]] = 'M';
+        afficheLab(salle1);
+        char choix = controleSaisie();
+        indiceP = deplacement(salle1, choix, indiceP[0], indiceP[1]);
+        afficheLab(salle1);
+        choix = controleSaisie();
+        indiceP = deplacement(salle1, choix, indiceP[0], indiceP[1]);
+        afficheLab(salle1);
         //choix = controleSaisie();
         //indiceP = deplacement(salle1, choix, indiceP[0], indiceP[1]);
         //afficheLab(salle1);
@@ -218,7 +241,7 @@ class Labyrinthe extends Program{
         //     }
         // }
 
-        newQuestion("Quelle est la capital de la France", "paris");
+        
         newQuestion("Quel fleuve passe par Paris ?", "seine");
         newQuestion("Qui est Guillaume Apollinaire ?", "poète");
         // newQuestion("Quelle est la raison pour laquelle la Préhistoire a pris fin ?","l'écriture");
