@@ -31,8 +31,16 @@ class Labyrinthe extends Program{
     String QuestiontoString (Question q){ //Affiche l'énoncé de la question
         return "" + q.question;
     }
+
     String ReponsetoString (Question q){ //Affiche la réponse de la question
         return "" + q.reponse;
+    }
+
+    Joueur newJoueur(String pseudo){
+        Joueur j = new Joueur();
+        j.pseudo = pseudo;
+        j.score = 0;
+        return j;
     }
 
     int nbLignes(String cheminFichier){
@@ -296,6 +304,10 @@ class Labyrinthe extends Program{
             print(readFile("ressources/img/Presentation.txt", true));
             lancer = readString();
         }
+        print("Rentrez votre pseudo : ");
+        String pseudo = readString();
+        Joueur j = newJoueur(pseudo);
+        println("" + j.pseudo + " / score : " + j.score + " / vie : " + j.vie + " / boss vaincu ? " + j.bossVaincu);
         char[][] salle1 = genererSalle("ressources/Lab/Salle1");
         Question q = newQuestion("Quelle est la capital de la France", "paris");
         afficheLab(salle1);
