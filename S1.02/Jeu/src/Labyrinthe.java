@@ -150,7 +150,7 @@ class Labyrinthe extends Program{
         return(lab);
     }
 
-    int[] deplacement(char[][] Lab, char direction, int positionL, int positionC){ //vérifie si déplacement possible, si oui l'effectue
+    int[] deplacement(char[][] Lab, char direction, int positionL, int positionC, Joueur j){ //vérifie si déplacement possible, si oui l'effectue
         if(direction == 'z' && positionL-1 >= 0 && Lab[positionL-1][positionC] != '@'){ //déplacement haut
             if(Lab[positionL-1][positionC] == '.'){ //déplacement si case vide
                 Lab[positionL][positionC] = '.';
@@ -161,6 +161,9 @@ class Labyrinthe extends Program{
                 afficheQuestion(q, true);
                 if(questionCorrect(q)){ //En cas de bonne réponse efface le monstre
                     Lab[positionL-1][positionC] = '.';
+                    j.score += 1;
+                } else {
+                    j.vie -= 10;
                 }
             }
         }
@@ -175,6 +178,9 @@ class Labyrinthe extends Program{
                 afficheQuestion(q, true);
                 if(questionCorrect(q)){ //En cas de bonne réponse efface le monstre
                     Lab[positionL+1][positionC] = '.';
+                    j.score += 1;
+                } else {
+                    j.vie -= 10;
                 }
             }
         }
@@ -189,6 +195,9 @@ class Labyrinthe extends Program{
                 afficheQuestion(q, true);
                 if(questionCorrect(q)){ //En cas de bonne réponse efface le monstre
                     Lab[positionL][positionC-1] = '.';
+                    j.score += 1;
+                } else {
+                    j.vie -= 10;
                 }
             }
         }
@@ -203,6 +212,9 @@ class Labyrinthe extends Program{
                 afficheQuestion(q, true);
                 if(questionCorrect(q)){ //En cas de bonne réponse efface le monstre
                     Lab[positionL][positionC+1] = '.';
+                    j.score += 1;
+                } else {
+                    j.vie -= 10;
                 }
             }
         }
@@ -310,16 +322,15 @@ class Labyrinthe extends Program{
         println("" + j.pseudo + " / score : " + j.score + " / vie : " + j.vie + " / boss vaincu ? " + j.bossVaincu);
         char[][] salle1 = genererSalle("ressources/Lab/Salle1");
         Question q = newQuestion("Quelle est la capital de la France", "paris");
-        afficheLab(salle1);
-        int[] indiceP = indiceDe('P', salle1);
-        salle1[indiceP[0]-1][indiceP[1]] = 'M';
-        afficheLab(salle1);
-        char choix = controleSaisie();
-        indiceP = deplacement(salle1, choix, indiceP[0], indiceP[1]);
-        afficheLab(salle1);
-        choix = controleSaisie();
-        indiceP = deplacement(salle1, choix, indiceP[0], indiceP[1]);
-        afficheLab(salle1);
+        int[] indiceM = indiceDe('P', salle1);
+        salle1[indiceM[0]-1][indiceM[1]] = 'M';
+        while(j.vie >= 0 && !j.bossVaincu){
+            afficheLab(salle1);
+            println("" + j.pseudo + " / score : " + j.score + " / vie : " + j.vie + " / boss vaincu ? " + j.bossVaincu);
+            int[] indiceP = indiceDe('P', salle1);
+            char choix = controleSaisie();
+            indiceP = deplacement(salle1, choix, indiceP[0], indiceP[1], j);
+        }
         //choix = controleSaisie();
         //indiceP = deplacement(salle1, choix, indiceP[0], indiceP[1]);
         //afficheLab(salle1);
