@@ -5,6 +5,7 @@ class Labyrinthe extends Program{
     final int NOMBRESALLES = 10;
     
     Salle[] salles = new Salle[]{
+                                    newSalle(0,"0110"),
                                     newSalle(1,"0101"),
                                     newSalle(2,"1111"),
                                     newSalle(3,"0101"),
@@ -152,7 +153,8 @@ class Labyrinthe extends Program{
 
     Salle[][] genererLab(int nbSalle){ // genere un Layrinthe de nbSalle salle et d'une taille de 72 x 19 par salle !!!! IL FAUT QUE LE nbSalle SOINT IMPAIRE !!!!
         Salle[][] lab = new Salle[nbSalle][nbSalle];
-        lab[(nbSalle/2)+1][(nbSalle/2)+1] = salles[2];
+        lab[(nbSalle/2)+1][(nbSalle/2)+1] = salles[3];
+        lab[0][0] = salles[0];
         for(int i=0;i<length(lab,1);i++){
             for(int j=0;j<length(lab,2);j++){
                 if(lab[i][j]==null){
@@ -360,18 +362,18 @@ class Labyrinthe extends Program{
         String pseudo = readString();
         Joueur j = newJoueur(pseudo);
         println("" + j.pseudo + " / score : " + j.score + " / vie : " + j.vie + " / boss vaincu ? " + j.bossVaincu);
-        char[][] salle1 = genererSalle("ressources/Lab/Salle1");
+        char[][] salle = lab[0][0];
         Question q = newQuestion("Quelle est la capital de la France", "paris");
-        salle1[11][35] = 'P';
+        afficherSalle(lab[1][0].numero);
         int[] indiceM = indiceDe('P', salle1);
-        salle1[indiceM[0]-1][indiceM[1]] = 'M';
+        salle[indiceM[0]-1][indiceM[1]] = 'M';
         afficheStringTab(load("ressources/score.csv"));
         while(j.vie > 0 && !j.bossVaincu){
-            afficheLab(salle1);
+            afficheLab(salle);
             println("" + j.pseudo + " / score : " + j.score + " / vie : " + j.vie + " / boss vaincu ? " + j.bossVaincu);
-            int[] indiceP = indiceDe('P', salle1);
+            int[] indiceP = indiceDe('P', salle);
             char choix = controleSaisie();
-            indiceP = deplacement(salle1, choix, indiceP[0], indiceP[1], j);
+            indiceP = deplacement(salle, choix, indiceP[0], indiceP[1], j);
         }
         
         newQuestion("Quel fleuve passe par Paris ?", "seine");
