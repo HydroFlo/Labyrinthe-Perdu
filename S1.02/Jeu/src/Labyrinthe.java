@@ -271,10 +271,10 @@ class Labyrinthe extends Program{
 
     String[][] load(String cheminFichier){ //Charge un fichier csv en un tableau
         CSVFile file = loadCSV(cheminFichier);
-        String tab[][] =  new String[rowCount(file)][columnCount(file)];
+        String tab[][] =  new String[rowCount(file)-1][columnCount(file)];
         for(int i = 0; i < rowCount(file)-1; i ++){
             for(int j = 0; j < columnCount(file); j++){
-                tab[i][j] = getCell(file, i, j);
+                tab[i][j] = getCell(file, i+1, j);
             }
         }
         return tab;
@@ -308,7 +308,7 @@ class Labyrinthe extends Program{
 
     boolean questionCorrect(Question q){ //Vérifie si on donne la bonne réponse
         String res = readString();
-        return equals(res, q.reponse);
+        return equals(toLowerCase(res), toLowerCase(q.reponse));
     }
 
     void afficheLab(char[][] Lab){ //affiche le Labyrinthe (@ = mur, P = perso, S = sortie, M = monstre, B = boss, 🏠 = shop, .  = case vide)
@@ -362,10 +362,11 @@ class Labyrinthe extends Program{
         println("" + j.pseudo + " / score : " + j.score + " / vie : " + j.vie + " / boss vaincu ? " + j.bossVaincu);
         char[][] salle1 = genererSalle("ressources/Lab/Salle1");
         Question q = newQuestion("Quelle est la capital de la France", "paris");
+        salle1[11][35] = 'P';
         int[] indiceM = indiceDe('P', salle1);
         salle1[indiceM[0]-1][indiceM[1]] = 'M';
         afficheStringTab(load("ressources/score.csv"));
-        while(j.vie >= 0 && !j.bossVaincu){
+        while(j.vie > 0 && !j.bossVaincu){
             afficheLab(salle1);
             println("" + j.pseudo + " / score : " + j.score + " / vie : " + j.vie + " / boss vaincu ? " + j.bossVaincu);
             int[] indiceP = indiceDe('P', salle1);
