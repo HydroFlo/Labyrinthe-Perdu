@@ -1,4 +1,25 @@
 class Labyrinthe extends Program{
+    
+    Salle[] salles = new Salle[]{
+                                    newSalle(1,"0101"),
+                                    newSalle(2,"1111"),
+                                    newSalle(3,"0101"),
+                                    newSalle(4,"1010"),
+                                    newSalle(5,"1101"),
+                                    newSalle(6,"1100"),
+                                    newSalle(7,"1001"),
+                                    newSalle(8,"1011"),
+                                    newSalle(9,"0011"),
+                                    newSalle(10,"0110")
+                                };
+    
+
+    Salle newSalle(int numero, String sorties){
+        Salle s = new Salle();
+        s.numero=numero;
+        s.sorties=sorties;
+        return(s);
+    }
 
     Question newQuestion(String question, String reponse){ //Implémente une fonction et sa réponse
         Question q = new Question();
@@ -62,13 +83,64 @@ class Labyrinthe extends Program{
         return lab;
     }
 
-    /*char[][] genererLab(int nbSalle){ // genere un Layrinthe de nbSalle salle et d'une taille de 72 x 19 par salle
-        char[][]new char[nbSalle][nbSalle]{
-            
+    String veriferVoisins(Salle[][] lab, int i, int j){
+        String resultat = "";
+        if (i<length(lab,1) && i>=1 && lab[i-1][j]!=null){
+            resultat = resultat + lab[i-1][j].sorties;
+        }else{resultat=resultat+"EEEE";}
+        if (j<length(lab,2)-1 && lab[i][j+1]!=null){
+            resultat = resultat + lab[i][j+1].sorties;
+        }else{resultat=resultat+"EEEE";}
+        if (i<length(lab,1)-1 && lab[i+1][j]!=null){
+            resultat = resultat + lab[i+1][j].sorties;
+        }else{resultat=resultat+"EEEE";}
+        if (j<length(lab,2)&& j>=1 && lab[i][j-1]!=null){
+            resultat = resultat + lab[i][j-1].sorties;
+        }else{resultat=resultat+"EEEE";}
+        println(resultat);
+        return(resultat);
+    }
+
+    void choisirSalle(Salle[][] lab, int i, int j){
+        String resultat="";
+        String check = veriferVoisins(lab,i,j);
+        String haut = substring(check,0,4);
+        String droite = substring(check,4,8);
+        String bas = substring(check,8,12);
+        String gauche = substring(check,12,16);
+        if(charAt(haut,2)=='1'){
+            resultat=resultat+'1';
+        }else{resultat=resultat+'.';}
+        if(charAt(droite,3)=='1'){
+            resultat=resultat+'1';
+        }else{resultat=resultat+'.';}
+        if(charAt(bas,0)=='1'){
+            resultat=resultat+'1';
+            }else{resultat=resultat+'.';}
+        if(charAt(gauche,1)=='1'){
+            resultat=resultat+'1';
+        }else{resultat=resultat+'.';}
+        println(resultat);
+        int nbalea=(int)(random()*10);
+        // while(!equals(salles[nbalea].sorties,resultat)){
+        //     nbalea=(int)(random()*10);
+        //     print(" trou de cul " + nbalea);
+        // }
+        lab[i][j]=salles[nbalea];
+    }
+
+    Salle[][] genererLab(int nbSalle){ // genere un Layrinthe de nbSalle salle et d'une taille de 72 x 19 par salle !!!! IL FAUT QUE LE nbSalle SOINT IMPAIRE !!!!
+        Salle[][] lab = new Salle[nbSalle][nbSalle];
+        lab[(nbSalle/2)+1][(nbSalle/2)+1] = salles[2];
+        for(int i=0;i<length(lab,1);i++){
+            for(int j=0;j<length(lab,2);j++){
+                if(lab[i][j]==null){
+                    choisirSalle(lab,i,j);
+                }
+            }
         }
-        
-        return(tab);
-    } */
+        return(lab);
+    }
 
     int[] deplacement(char[][] Lab, char direction, int positionL, int positionC){ //vérifie si déplacement possible, si oui l'effectue
         if(direction == 'z' && positionL-1 >= 0 && Lab[positionL-1][positionC] != '@'){ //déplacement haut
@@ -217,7 +289,7 @@ class Labyrinthe extends Program{
     }
 
     void algorithm(){
-        //genererLab(5); //genere le Layrinthe
+        genererLab(5); //genere le Layrinthe
         print(readFile("ressources/img/Presentation.txt", true));
         String lancer = readString();
         while(lancer != ""){
