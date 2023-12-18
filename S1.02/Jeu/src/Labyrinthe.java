@@ -1,3 +1,5 @@
+import extensions.CSVFile;
+
 class Labyrinthe extends Program{
     
     Salle[] salles = new Salle[]{
@@ -36,14 +38,14 @@ class Labyrinthe extends Program{
         return "" + q.reponse;
     }
 
-    Joueur newJoueur(String pseudo){
+    Joueur newJoueur(String pseudo){ //Créé un nouveau Joueur
         Joueur j = new Joueur();
         j.pseudo = pseudo;
         j.score = 0;
         return j;
     }
 
-    int nbLignes(String cheminFichier){
+    int nbLignes(String cheminFichier){ //retourne le nombre de ligne d'un fichier
         int i = 1;
         extensions.File file = newFile(cheminFichier);
         String verif = readLine(file);
@@ -256,6 +258,25 @@ class Labyrinthe extends Program{
         println();
     }
 
+    String[][] load(String cheminFichier){ //Charge un fichier csv en un tableau
+        CSVFile file = loadCSV(cheminFichier);
+        String tab[][] =  new String[rowCount(file)][columnCount(file)];
+        for(int i = 0; i < rowCount(file)-1; i ++){
+            for(int j = 0; j < columnCount(file); j++){
+                tab[i][j] = getCell(file, i, j);
+            }
+        }
+        return tab;
+    }
+
+    void afficheStringTab(String[][] tab){ //Affiche un tableau de String a 2 dimension
+        for(int i = 0; i < length(tab,1); i ++){
+            for(int j = 0; j < length(tab,2); j ++){
+                print(tab[i][j] + "  ");
+            }
+            println();
+        }
+    }
 
     void afficheQuestion(Question q, boolean reponseLibre){
         println("################################################################################" + '\n' +
@@ -324,6 +345,7 @@ class Labyrinthe extends Program{
         Question q = newQuestion("Quelle est la capital de la France", "paris");
         int[] indiceM = indiceDe('P', salle1);
         salle1[indiceM[0]-1][indiceM[1]] = 'M';
+        afficheStringTab(load("ressources/score.csv"));
         while(j.vie >= 0 && !j.bossVaincu){
             afficheLab(salle1);
             println("" + j.pseudo + " / score : " + j.score + " / vie : " + j.vie + " / boss vaincu ? " + j.bossVaincu);
@@ -331,23 +353,6 @@ class Labyrinthe extends Program{
             char choix = controleSaisie();
             indiceP = deplacement(salle1, choix, indiceP[0], indiceP[1], j);
         }
-        //choix = controleSaisie();
-        //indiceP = deplacement(salle1, choix, indiceP[0], indiceP[1]);
-        //afficheLab(salle1);
-        //choix = controleSaisie();
-        //indiceP = deplacement(salle1, choix, indiceP[0], indiceP[1]);
-        //afficheLab(salle1);
-        //choix = controleSaisie();
-        //indiceP = deplacement(salle1, choix, indiceP[0], indiceP[1]);
-        //afficheLab(salle1);
-        
-        // while(!jeufini()){
-        //     char choix = ControleSaisie();
-        //     if(choix == 'z' || choix == 'q' || choix == 's' || choix == 'd'){
-        //         deplacement(jeu, choix);
-        //     }
-        // }
-
         
         newQuestion("Quel fleuve passe par Paris ?", "seine");
         newQuestion("Qui est Guillaume Apollinaire ?", "poète");
