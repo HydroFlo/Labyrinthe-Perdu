@@ -1,6 +1,8 @@
 import extensions.CSVFile;
 
 class Labyrinthe extends Program{
+
+    final int NOMBRESALLES = 10;
     
     Salle[] salles = new Salle[]{
                                     newSalle(1,"0101"),
@@ -132,11 +134,20 @@ class Labyrinthe extends Program{
         }else{resultat=resultat+'.';}
         println(resultat);
         int nbalea=(int)(random()*10);
-        // while(!equals(salles[nbalea].sorties,resultat)){
-        //     nbalea=(int)(random()*10);
-        //     print(" trou de cul " + nbalea);
-        // }
+        while(!equals(salles[nbalea].sorties,choixAlea(resultat))){
+            nbalea=(int)(random()*10);
+            println(nbalea);
+        }
         lab[i][j]=salles[nbalea];
+    }
+
+    String choixAlea(String chaine){
+        for(int a = 0; a<4;a++){
+            if(charAt(chaine,a)=='.'||charAt(chaine,a)=='E'){
+                chaine=substring(chaine,0,a)+(int)(random()*2)+substring(chaine,a+1,length(chaine));
+            }
+        }
+        return(chaine);
     }
 
     Salle[][] genererLab(int nbSalle){ // genere un Layrinthe de nbSalle salle et d'une taille de 72 x 19 par salle !!!! IL FAUT QUE LE nbSalle SOINT IMPAIRE !!!!
@@ -328,9 +339,17 @@ class Labyrinthe extends Program{
         }
         return new int[]{0,0};
     }
-
+    void afficherSalle(int nbr){
+        char[][] salle = genererSalle("ressources/Lab/Salle"+nbr);
+        afficheLab(salle);
+    }
     void algorithm(){
-        genererLab(5); //genere le Layrinthe
+        Salle[][] lab = genererLab(5); //genere le Layrinthe
+        for(int i = 0; i<length(lab,1);i++){
+            for(int j=0;j<length(lab,2);j++){
+                afficherSalle(lab[i][j].numero);
+            }
+        }
         print(readFile("ressources/img/Presentation.txt", true));
         String lancer = readString();
         while(lancer != ""){
