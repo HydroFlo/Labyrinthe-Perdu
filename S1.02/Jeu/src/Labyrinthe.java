@@ -374,7 +374,7 @@ class Labyrinthe extends Program{
         newQuestion("Convertir 1548 dg en mg.","154800");
         newQuestion("Convertir 10599 hg en cg.","105990000");
         newQuestion("Convertir 10 cm en m.","0,1");
-        newQuestion("En quelle année l'Amérique à été découverte ?","1492");
+        newQuestion("En quelle année l'Amérique à été découverte par les européens ?","1492");
         newQuestion("Qui à découvert l'Amérique ?","Christophe Colomb");
 
         
