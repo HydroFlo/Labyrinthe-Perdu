@@ -428,7 +428,9 @@ class Labyrinthe extends Program{
             print(readFile("ressources/img/Presentation.txt", true));
             lancer = readString();
         }
-
+        println("Les controles du jeu sont : ");
+        print(readFile("ressources/img/Help", true));
+        println("A tout moment dans la partie, appuyer sur \"H\" pour les réafficher");
         print("Rentrez votre pseudo : ");
         String pseudo = readString();
         Joueur j = newJoueur(pseudo); //Création du joueur
@@ -444,7 +446,7 @@ class Labyrinthe extends Program{
         
         while(j.vie > 0 && !j.bossVaincu){
             afficheLab(salle);
-            println("" + j.pseudo + " / score : " + j.score + " / vie : " + j.vie + " / boss vaincu ? " + j.bossVaincu);
+            println("" + j.pseudo + " / Score : " + j.score + " / PV : " + j.vie );
             int[] indiceP = indiceDe('P', salle);
             char choix = controleSaisie();
             indiceP = deplacement(salle, choix, indiceP[0], indiceP[1], j);
