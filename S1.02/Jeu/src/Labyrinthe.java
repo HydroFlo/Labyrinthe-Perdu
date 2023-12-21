@@ -110,7 +110,7 @@ class Labyrinthe extends Program{
         if (j<length(lab,2)&& j>=1 && lab[i][j-1]!=null){
             resultat = resultat + lab[i][j-1].sorties;
         }else{resultat=resultat+"EEEE";}
-        println(resultat);
+        //println(resultat);
         return(resultat);
     }
 
@@ -133,11 +133,11 @@ class Labyrinthe extends Program{
         if(charAt(gauche,1)=='1'){
             resultat=resultat+'1';
         }else{resultat=resultat+'.';}
-        println(resultat);
+        //println(resultat);
         int nbalea=(int)(random()*10);
         while(!equals(salles[nbalea].sorties,choixAlea(resultat))){
             nbalea=(int)(random()*10);
-            println(nbalea);
+            //println(nbalea);
         }
         lab[i][j]=salles[nbalea];
     }
@@ -180,6 +180,15 @@ class Labyrinthe extends Program{
                 } else {
                     j.vie -= 10;
                 }
+            }  else if(Lab[positionL-1][positionC] == 'B'){ //Si Monstre, affiche la question.
+                Question q = newQuestion("Quelle est la capital de la France", "paris");
+                afficheQuestion(q, true);
+                if(questionCorrect(q)){ //En cas de bonne réponse efface le monstre
+                    j.bossVaincu = true;
+                    j.score += 30;
+                } else {
+                    j.vie -= 10;
+                }
             }
         }
 
@@ -194,6 +203,15 @@ class Labyrinthe extends Program{
                 if(questionCorrect(q)){ //En cas de bonne réponse efface le monstre
                     Lab[positionL+1][positionC] = '.';
                     j.score += 1;
+                } else {
+                    j.vie -= 10;
+                }
+            }  else if(Lab[positionL+1][positionC] == 'B'){ //Si Monstre, affiche la question.
+                Question q = newQuestion("Quelle est la capital de la France", "paris");
+                afficheQuestion(q, true);
+                if(questionCorrect(q)){ //En cas de bonne réponse efface le monstre
+                    j.bossVaincu = true;
+                    j.score += 30;
                 } else {
                     j.vie -= 10;
                 }
@@ -214,6 +232,15 @@ class Labyrinthe extends Program{
                 } else {
                     j.vie -= 10;
                 }
+            }  else if(Lab[positionL][positionC-1] == 'B'){ //Si Monstre, affiche la question.
+                Question q = newQuestion("Quelle est la capital de la France", "paris");
+                afficheQuestion(q, true);
+                if(questionCorrect(q)){ //En cas de bonne réponse efface le monstre
+                    j.bossVaincu = true;
+                    j.score += 30;
+                } else {
+                    j.vie -= 10;
+                }
             }
         }
 
@@ -228,6 +255,15 @@ class Labyrinthe extends Program{
                 if(questionCorrect(q)){ //En cas de bonne réponse efface le monstre
                     Lab[positionL][positionC+1] = '.';
                     j.score += 1;
+                } else {
+                    j.vie -= 10;
+                }
+            }  else if(Lab[positionL][positionC+1] == 'B'){ //Si Monstre, affiche la question.
+                Question q = newQuestion("Quelle est la capital de la France", "paris");
+                afficheQuestion(q, true);
+                if(questionCorrect(q)){ //En cas de bonne réponse efface le monstre
+                    j.bossVaincu = true;
+                    j.score += 30;
                 } else {
                     j.vie -= 10;
                 }
@@ -301,7 +337,7 @@ class Labyrinthe extends Program{
 
     }
 
-    void ajoutQuestion(String[][] file, int valeur1, int valeur2){
+    void ajoutScore(String[][] file, String pseudo, int score){ //ajout de Score (optionnel à faire plus tard)
 
     }
 
@@ -371,9 +407,15 @@ class Labyrinthe extends Program{
     void algorithm(){
         Salle[][] lab = genererLab(5); //genere le Layrinthe
         String[][] lQuestion = load("ressources/ListeQuestion.csv");
-        ajoutQuestion(lQuestion, 1);
-        lQuestion = load("ressources/ListeQuestion.csv");
-        afficheStringTab(lQuestion);
+        print("Voulez vous ajouter des question ? oui (o), non (autre)");
+        boolean ques = equals(toLowerCase(readString()), "o");
+        if(ques){
+            print("Combien voulez vous en ajouter ? : ");
+            int nbAjout = readInt();
+            ajoutQuestion(lQuestion, nbAjout);
+            lQuestion = load("ressources/ListeQuestion.csv");
+            afficheStringTab(lQuestion);
+        }
         for(int i = 0; i<length(lab,1);i++){
             for(int j=0;j<length(lab,2);j++){
                 afficherSalle(lab[i][j].numero);
@@ -397,6 +439,7 @@ class Labyrinthe extends Program{
         afficherSalle(lab[1][0].numero);
         int[] indiceM = indiceDe('P', salle);
         salle[indiceM[0]-1][indiceM[1]] = 'M';
+        salle[indiceM[0]-3][indiceM[1]] = 'B';
         afficheStringTab(load("ressources/score.csv"));
         
         while(j.vie > 0 && !j.bossVaincu){
@@ -406,6 +449,12 @@ class Labyrinthe extends Program{
             char choix = controleSaisie();
             indiceP = deplacement(salle, choix, indiceP[0], indiceP[1], j);
         }
+        if(j.bossVaincu){
+            print(readFile("ressources/img/Win.txt", true));
+        } else {
+            print(readFile("ressources/img/Lose.txt", true));
+        }
+
         
         newQuestion("Quel fleuve passe par Paris ?", "seine");
         newQuestion("Qui est Guillaume Apollinaire ?", "poète");
