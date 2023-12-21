@@ -19,7 +19,7 @@ class Labyrinthe extends Program{
                                 };
     
 
-    Salle newSalle(int numero, String sorties){
+    Salle newSalle(int numero, String sorties){ //Création d'une salle
         Salle s = new Salle();
         s.numero=numero;
         s.sorties=sorties;
@@ -273,17 +273,40 @@ class Labyrinthe extends Program{
 
     String[][] load(String cheminFichier){ //Charge un fichier csv en un tableau
         CSVFile file = loadCSV(cheminFichier);
-        String tab[][] =  new String[rowCount(file)-1][columnCount(file)];
-        for(int i = 0; i < rowCount(file)-1; i ++){
+        String tab[][] =  new String[rowCount(file)][columnCount(file)];
+        for(int i = 0; i < rowCount(file); i ++){
             for(int j = 0; j < columnCount(file); j++){
-                tab[i][j] = getCell(file, i+1, j);
+                tab[i][j] = getCell(file, i, j);
             }
         }
         return tab;
     }
 
+    void ajoutQuestion(String[][] file, int nbAjout){ //Permet d'ajouter nbAjout nouvelle Question
+        String[][] newFile = new String[length(file, 1) + nbAjout][length(file, 2)];
+        for(int i1 = 0; i1 < length(file, 1); i1 ++){ //copie le fichier de base
+            for(int j1 = 0; j1 < length(file, 2); j1 ++){
+                newFile[i1][j1] = file[i1][j1];
+            }
+        }
+        for(int i = length(file, 1); i < length(newFile); i ++){ //ajoute autant de question que demandé à l'appelle de la fonction
+            print("Quel est l'intitulé de la nouvelle question ? : ");
+            String intitu = readString();
+            print("Quelle est la réponse à cette question ? : ");
+            String rep = readString();
+            newFile[i][0]= intitu;
+            newFile[i][1]= rep;
+        }
+        saveCSV(newFile, "ressources/ListeQuestion.csv");
+
+    }
+
+    void ajoutQuestion(String[][] file, int valeur1, int valeur2){
+
+    }
+
     void afficheStringTab(String[][] tab){ //Affiche un tableau de String a 2 dimension
-        for(int i = 0; i < length(tab,1); i ++){
+        for(int i = 1; i < length(tab,1); i ++){
             for(int j = 0; j < length(tab,2); j ++){
                 print(tab[i][j] + "  ");
             }
@@ -347,27 +370,35 @@ class Labyrinthe extends Program{
     }
     void algorithm(){
         Salle[][] lab = genererLab(5); //genere le Layrinthe
+        String[][] lQuestion = load("ressources/ListeQuestion.csv");
+        ajoutQuestion(lQuestion, 1);
+        lQuestion = load("ressources/ListeQuestion.csv");
+        afficheStringTab(lQuestion);
         for(int i = 0; i<length(lab,1);i++){
             for(int j=0;j<length(lab,2);j++){
                 afficherSalle(lab[i][j].numero);
             }
         }
-        print(readFile("ressources/img/Presentation.txt", true));
+
+        print(readFile("ressources/img/Presentation.txt", true)); //affiche l'écran titre
         String lancer = readString();
-        while(lancer != ""){
+        while(lancer != ""){ //Vérifie que l'utilisateur fasse "Entrée" et si oui lance le jeu
             print(readFile("ressources/img/Presentation.txt", true));
             lancer = readString();
         }
+
         print("Rentrez votre pseudo : ");
         String pseudo = readString();
-        Joueur j = newJoueur(pseudo);
+        Joueur j = newJoueur(pseudo); //Création du joueur
         println("" + j.pseudo + " / score : " + j.score + " / vie : " + j.vie + " / boss vaincu ? " + j.bossVaincu);
-        char[][] salle = lab[0][0];
+        
+        char[][] salle = genererSalle("ressources/Lab/Salle"+lab[0][0].numero);
         Question q = newQuestion("Quelle est la capital de la France", "paris");
         afficherSalle(lab[1][0].numero);
-        int[] indiceM = indiceDe('P', salle1);
+        int[] indiceM = indiceDe('P', salle);
         salle[indiceM[0]-1][indiceM[1]] = 'M';
         afficheStringTab(load("ressources/score.csv"));
+        
         while(j.vie > 0 && !j.bossVaincu){
             afficheLab(salle);
             println("" + j.pseudo + " / score : " + j.score + " / vie : " + j.vie + " / boss vaincu ? " + j.bossVaincu);
