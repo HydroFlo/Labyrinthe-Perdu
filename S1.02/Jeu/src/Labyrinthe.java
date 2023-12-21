@@ -78,7 +78,7 @@ class Labyrinthe extends Program{
     char controleSaisie(){ // verifie que l'utilisateur saisisse bien 1 caractere
         String choix;
         do{
-            choix = readString();
+            choix = toLowerCase(readString());
         }while(length(choix)!= 1);
         return charAt(choix, 0);
     }
@@ -165,7 +165,18 @@ class Labyrinthe extends Program{
         return(lab);
     }
 
+    void afficheHelp(){
+        print(readFile("ressources/img/Help", true));
+        println("A tout moment dans la partie, appuyer sur \"H\" pour réafficher ce menu");
+        println();
+        readString();
+    }
+
     int[] deplacement(char[][] Lab, char direction, int positionL, int positionC, Joueur j){ //vérifie si déplacement possible, si oui l'effectue
+        if(direction == 'h'){
+            afficheHelp();
+        }
+        
         if(direction == 'z' && positionL-1 >= 0 && Lab[positionL-1][positionC] != '@'){ //déplacement haut
             if(Lab[positionL-1][positionC] == '.'){ //déplacement si case vide
                 Lab[positionL][positionC] = '.';
@@ -428,9 +439,9 @@ class Labyrinthe extends Program{
             print(readFile("ressources/img/Presentation.txt", true));
             lancer = readString();
         }
-        println("Les controles du jeu sont : ");
-        print(readFile("ressources/img/Help", true));
-        println("A tout moment dans la partie, appuyer sur \"H\" pour les réafficher");
+
+        afficheHelp();
+
         print("Rentrez votre pseudo : ");
         String pseudo = readString();
         Joueur j = newJoueur(pseudo); //Création du joueur
