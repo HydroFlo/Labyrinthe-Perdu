@@ -430,6 +430,7 @@ class Labyrinthe extends Program{
             lQuestion = load("ressources/ListeQuestion.csv");
             afficheStringTab(lQuestion);
         }
+
         for(int i = 0; i<length(lab,1);i++){
             for(int j=0;j<length(lab,2);j++){
                 afficherSalle(lab[i][j].numero);
@@ -448,7 +449,6 @@ class Labyrinthe extends Program{
         print("Rentrez votre pseudo : ");
         String pseudo = readString();
         Joueur j = newJoueur(pseudo); //Création du joueur
-        println("" + j.pseudo + " / score : " + j.score + " / vie : " + j.vie + " / boss vaincu ? " + j.bossVaincu);
         
         char[][] salle = genererSalle("ressources/Lab/Salle"+lab[0][0].numero);
         Question q = newQuestion("Quelle est la capital de la France", "paris");
@@ -470,35 +470,6 @@ class Labyrinthe extends Program{
         } else {
             print(readFile("ressources/img/Lose.txt", true));
         }
-
-        
-        newQuestion("Quel fleuve passe par Paris ?", "seine");
-        newQuestion("Qui est Guillaume Apollinaire ?", "poète");
-        // newQuestion("Quelle est la raison pour laquelle la Préhistoire a pris fin ?","l'écriture");
-        newQuestion("Quelle est la capitale du Danemark ?","Copenhague");
-        newQuestion("Combien y a-t-il de fautes dans cette phrase : \"Si tu réssidive, tu auras une sanktion ?\"","2");
-        newQuestion("Combien font 5 + 9","14");
-        newQuestion("\"On\" ou \"Ont\" : Ils ... un livre neuf.","ont");
-        newQuestion("\"On\" ou \"Ont\" : ... adore notre chat.","on");
-        newQuestion("\"On\" ou \"Ont\" : Ils ... préparé des surprises.","ont");
-        newQuestion("\"On\" ou \"Ont\" : ... arrive bientôt ?","on");
-        newQuestion("Ecrire en chiffre : trois-cent-vight-deux","322");
-        newQuestion("Ecrire en chiffre : six-cent-six","606");
-        newQuestion("Ecrire en chiffre : six-cent-soixante-dix-neuf","679");
-        newQuestion("Ecrire en chiffre : soixante-neuf","69");
-        newQuestion("Ecrire en chiffre : quatre-cent-quatre-vingts","420");
-        newQuestion("Ecrire en lettre : 491","quatre-cent-quatre-vingt-onze");
-        newQuestion("Ecrire en lettre : 8","huit");
-        newQuestion("Ecrire en lettre : 99","quatre-vingt-dix-neuf");
-        newQuestion("A quel temps est conjugé cette phrase : \"Tu comprendras plus tard.\"","futur");
-        newQuestion("A quel temps est conjugé cette phrase : \"Je vais manger chez un ami.\"","présent");
-        newQuestion("A quel temps est conjugé cette phrase : \"Qu'as tu fais ?\"","passé composé");
-        newQuestion("A quel temps est conjugé cette phrase : \"Ca été ?\"","passé");
-        newQuestion("Convertir 1548 dg en mg.","154800");
-        newQuestion("Convertir 10599 hg en cg.","105990000");
-        newQuestion("Convertir 10 cm en m.","0,1");
-        newQuestion("En quelle année l'Amérique à été découverte par les européens ?","1492");
-        newQuestion("Qui à découvert l'Amérique ?","Christophe Colomb");
 
         
     }

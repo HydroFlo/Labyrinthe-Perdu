@@ -6,9 +6,10 @@ Contacts : alexandre.dehaine.etu@univ-lille.fr , florian.gambirasio.etu@univ-lil
 
 # Présentation de Labyrinthe
 
-<Description de votre jeu>
-Des captures d'écran illustrant le fonctionnement du logiciel sont proposées dans le répertoire shots.
+Labyrinthe est un jeu d'exploration dans lequel vous pouvez croiser des monstres (M) ainsi qu'un boss (B).
+Chaque monstre vaincu rapporte 1 point, battre le boss met fin au jeu et rapporte 3 points.
 
+Des captures d'écran illustrant le fonctionnement du logiciel sont proposées dans le répertoire shots.
 
 # Utilisation de Labyrinthe
 
