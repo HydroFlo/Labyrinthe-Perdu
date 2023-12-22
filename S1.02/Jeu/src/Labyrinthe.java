@@ -175,7 +175,7 @@ class Labyrinthe extends Program{
         readString();
     }
 
-    int[] deplacement(char[][] Lab, char direction, int positionL, int positionC, Joueur j, Question[] liste){ //vérifie si déplacement possible, si oui l'effectue
+    int[] deplacement(char[][] Lab, char direction, int positionL, int positionC, Joueur j, Question[] liste, Question[] listeBoss){ //vérifie si déplacement possible, si oui l'effectue
         if(direction == 'h'){
             afficheHelp();
         }
@@ -195,7 +195,7 @@ class Labyrinthe extends Program{
                     j.vie -= 10;
                 }
             }  else if(Lab[positionL-1][positionC] == 'B'){ //Si Monstre, affiche la question.
-                Question q = newQuestion("Quel roi était surnommé \"Le roi Soleil\"", "Louis XIV");
+                Question q = questionRandom(listeBoss, 0);
                 afficheQuestion(q, true);
                 if(questionCorrect(q)){ //En cas de bonne réponse efface le monstre
                     j.bossVaincu = true;
@@ -212,7 +212,7 @@ class Labyrinthe extends Program{
                 Lab[positionL+1][positionC] = 'P';
                 return new int[]{positionL+1, positionC};
             } else if (Lab[positionL+1][positionC] == 'M'){
-                Question q = newQuestion("Quelle est la capitale de la France", "paris");
+                Question q = questionRandom(liste, j.score);
                 afficheQuestion(q, true);
                 if(questionCorrect(q)){ //En cas de bonne réponse efface le monstre
                     Lab[positionL+1][positionC] = '.';
@@ -221,7 +221,7 @@ class Labyrinthe extends Program{
                     j.vie -= 10;
                 }
             }  else if(Lab[positionL+1][positionC] == 'B'){ //Si Monstre, affiche la question.
-                Question q = newQuestion("Quel roi était surnommé \"Le roi Soleil\"", "Louis XIV");
+                Question q = questionRandom(listeBoss, 0);
                 afficheQuestion(q, true);
                 if(questionCorrect(q)){ //En cas de bonne réponse efface le monstre
                     j.bossVaincu = true;
@@ -238,7 +238,7 @@ class Labyrinthe extends Program{
                 Lab[positionL][positionC-1] = 'P';
                 return new int[]{positionL, positionC-1};
             } else if (Lab[positionL][positionC-1] == 'M'){
-                Question q = newQuestion("Quelle est la capitale de la France", "paris");
+                Question q = questionRandom(liste, j.score);
                 afficheQuestion(q, true);
                 if(questionCorrect(q)){ //En cas de bonne réponse efface le monstre
                     Lab[positionL][positionC-1] = '.';
@@ -247,7 +247,7 @@ class Labyrinthe extends Program{
                     j.vie -= 10;
                 }
             }  else if(Lab[positionL][positionC-1] == 'B'){ //Si Monstre, affiche la question.
-                Question q = newQuestion("Quel roi était surnommé \"Le roi Soleil\"", "Louis XIV");
+                Question q = questionRandom(listeBoss, 0);
                 afficheQuestion(q, true);
                 if(questionCorrect(q)){ //En cas de bonne réponse efface le monstre
                     j.bossVaincu = true;
@@ -264,7 +264,7 @@ class Labyrinthe extends Program{
                 Lab[positionL][positionC+1] = 'P';
                 return new int[]{positionL, positionC+1};
             } else if (Lab[positionL][positionC+1] == 'M'){
-                Question q = newQuestion("Quelle est la capitale de la France", "paris");
+                Question q = questionRandom(liste, j.score);
                 afficheQuestion(q, true);
                 if(questionCorrect(q)){ //En cas de bonne réponse efface le monstre
                     Lab[positionL][positionC+1] = '.';
@@ -273,7 +273,7 @@ class Labyrinthe extends Program{
                     j.vie -= 10;
                 }
             }  else if(Lab[positionL][positionC+1] == 'B'){ //Si Monstre, affiche la question.
-                Question q = newQuestion("Quel roi était surnommé \"Le roi Soleil\"", "Louis XIV");
+                Question q = questionRandom(listeBoss, 0);
                 afficheQuestion(q, true);
                 if(questionCorrect(q)){ //En cas de bonne réponse efface le monstre
                     j.bossVaincu = true;
@@ -457,6 +457,7 @@ class Labyrinthe extends Program{
             afficheStringTab(questionTemp);
         }
         Question[] lQuestion = listeQuestion("ressources/ListeQuestion.csv");
+        Question[] lQuestionBoss = listeQuestion("ressources/ListeQuestionBoss.csv");
 
         for(int i = 0; i<length(lab,1);i++){
             for(int j=0;j<length(lab,2);j++){
@@ -490,7 +491,7 @@ class Labyrinthe extends Program{
             println("" + j.pseudo + " / Score : " + j.score + " / PV : " + j.vie );
             int[] indiceP = indiceDe('P', salle);
             char choix = controleSaisie();
-            indiceP = deplacement(salle, choix, indiceP[0], indiceP[1], j, lQuestion);
+            indiceP = deplacement(salle, choix, indiceP[0], indiceP[1], j, lQuestion, lQuestionBoss);
         }
         if(j.bossVaincu){
             print(readFile("ressources/img/Win.txt", true));
