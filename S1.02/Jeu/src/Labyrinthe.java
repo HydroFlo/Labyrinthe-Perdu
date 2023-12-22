@@ -186,7 +186,7 @@ class Labyrinthe extends Program{
                 Lab[positionL-1][positionC] = 'P';
                 return new int[]{positionL-1, positionC};
             } else if(Lab[positionL-1][positionC] == 'M'){ //Si Monstre, affiche la question.
-                Question q = newQuestion("Quelle est la capital de la France", "paris");
+                Question q = newQuestion("Quelle est la capitale de la France", "paris");
                 afficheQuestion(q, true);
                 if(questionCorrect(q)){ //En cas de bonne réponse efface le monstre
                     Lab[positionL-1][positionC] = '.';
@@ -195,7 +195,7 @@ class Labyrinthe extends Program{
                     j.vie -= 10;
                 }
             }  else if(Lab[positionL-1][positionC] == 'B'){ //Si Monstre, affiche la question.
-                Question q = newQuestion("Quelle est la capital de la France", "paris");
+                Question q = newQuestion("Quel roi était surnommé \"Le roi Soleil\"", "Louis XIV");
                 afficheQuestion(q, true);
                 if(questionCorrect(q)){ //En cas de bonne réponse efface le monstre
                     j.bossVaincu = true;
@@ -212,7 +212,7 @@ class Labyrinthe extends Program{
                 Lab[positionL+1][positionC] = 'P';
                 return new int[]{positionL+1, positionC};
             } else if (Lab[positionL+1][positionC] == 'M'){
-                Question q = newQuestion("Quelle est la capital de la France", "paris");
+                Question q = newQuestion("Quelle est la capitale de la France", "paris");
                 afficheQuestion(q, true);
                 if(questionCorrect(q)){ //En cas de bonne réponse efface le monstre
                     Lab[positionL+1][positionC] = '.';
@@ -221,7 +221,7 @@ class Labyrinthe extends Program{
                     j.vie -= 10;
                 }
             }  else if(Lab[positionL+1][positionC] == 'B'){ //Si Monstre, affiche la question.
-                Question q = newQuestion("Quelle est la capital de la France", "paris");
+                Question q = newQuestion("Quel roi était surnommé \"Le roi Soleil\"", "Louis XIV");
                 afficheQuestion(q, true);
                 if(questionCorrect(q)){ //En cas de bonne réponse efface le monstre
                     j.bossVaincu = true;
@@ -238,7 +238,7 @@ class Labyrinthe extends Program{
                 Lab[positionL][positionC-1] = 'P';
                 return new int[]{positionL, positionC-1};
             } else if (Lab[positionL][positionC-1] == 'M'){
-                Question q = newQuestion("Quelle est la capital de la France", "paris");
+                Question q = newQuestion("Quelle est la capitale de la France", "paris");
                 afficheQuestion(q, true);
                 if(questionCorrect(q)){ //En cas de bonne réponse efface le monstre
                     Lab[positionL][positionC-1] = '.';
@@ -247,7 +247,7 @@ class Labyrinthe extends Program{
                     j.vie -= 10;
                 }
             }  else if(Lab[positionL][positionC-1] == 'B'){ //Si Monstre, affiche la question.
-                Question q = newQuestion("Quelle est la capital de la France", "paris");
+                Question q = newQuestion("Quel roi était surnommé \"Le roi Soleil\"", "Louis XIV");
                 afficheQuestion(q, true);
                 if(questionCorrect(q)){ //En cas de bonne réponse efface le monstre
                     j.bossVaincu = true;
@@ -264,7 +264,7 @@ class Labyrinthe extends Program{
                 Lab[positionL][positionC+1] = 'P';
                 return new int[]{positionL, positionC+1};
             } else if (Lab[positionL][positionC+1] == 'M'){
-                Question q = newQuestion("Quelle est la capital de la France", "paris");
+                Question q = newQuestion("Quelle est la capitale de la France", "paris");
                 afficheQuestion(q, true);
                 if(questionCorrect(q)){ //En cas de bonne réponse efface le monstre
                     Lab[positionL][positionC+1] = '.';
@@ -273,7 +273,7 @@ class Labyrinthe extends Program{
                     j.vie -= 10;
                 }
             }  else if(Lab[positionL][positionC+1] == 'B'){ //Si Monstre, affiche la question.
-                Question q = newQuestion("Quelle est la capital de la France", "paris");
+                Question q = newQuestion("Quel roi était surnommé \"Le roi Soleil\"", "Louis XIV");
                 afficheQuestion(q, true);
                 if(questionCorrect(q)){ //En cas de bonne réponse efface le monstre
                     j.bossVaincu = true;
