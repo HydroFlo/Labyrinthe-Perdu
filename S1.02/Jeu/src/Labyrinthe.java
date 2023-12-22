@@ -497,8 +497,6 @@ class Labyrinthe extends Program{
             print(readFile("ressources/img/Win.txt", true));
         } else {
             print(readFile("ressources/img/Lose.txt", true));
-        }
-
-        
+        }  
     }
 }
