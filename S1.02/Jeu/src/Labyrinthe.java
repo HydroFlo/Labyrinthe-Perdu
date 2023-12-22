@@ -364,7 +364,7 @@ class Labyrinthe extends Program{
         }
     }
 
-    void afficheQuestion(Question q, boolean reponseLibre){
+    void afficheQuestion(Question q, boolean reponseLibre){ //Affiche les questions
         println("################################################################################" + '\n' +
                 "####@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@####" + '\n' +
                 "####@                                                                      @####");
@@ -381,7 +381,7 @@ class Labyrinthe extends Program{
 
     }
 
-    Question[] listeQuestion(String cheminFichier){
+    Question[] listeQuestion(String cheminFichier){ //Charge le csv des question et renvoie un tableau de question qui possède une Question par case
         String[][] lQuestion = load(cheminFichier);
         Question[] res = new Question[length(lQuestion, 1)-1];
         for(int i = 0; i < length(res); i ++){
@@ -396,6 +396,15 @@ class Labyrinthe extends Program{
         Question[] tabTest = listeQuestion("ressources/ListeQuestion.csv");
         assertEquals(test.question, tabTest[0].question);
         assertEquals(test2.question, tabTest[length(tabTest)-1].question);
+    }
+
+    Question questionRandom(Question[] liste, int nbUtilisees){
+        int choix = (int) (random()*length(liste)-nbUtilisees);
+        Question res = liste[choix];
+        Question temp = liste[nbUtilisees];
+        liste[choix] = temp;
+        liste[nbUtilisees] = res;
+        return res;
     }
 
     boolean questionCorrect(Question q){ //Vérifie si on donne la bonne réponse
@@ -437,16 +446,17 @@ class Labyrinthe extends Program{
     }
     void _algorithm(){
         Salle[][] lab = genererLab(5); //genere le Layrinthe
-        String[][] lQuestion = load("ressources/ListeQuestion.csv");
+        String[][] questionTemp = load("ressources/ListeQuestion.csv");
         print("Voulez vous ajouter des question ? oui (o), non (autre) : ");
         boolean ques = equals(toLowerCase(readString()), "o");
         if(ques){
             print("Combien voulez vous en ajouter ? : ");
             int nbAjout = readInt();
-            ajoutQuestion(lQuestion, nbAjout);
-            lQuestion = load("ressources/ListeQuestion.csv");
-            afficheStringTab(lQuestion);
+            ajoutQuestion(questionTemp, nbAjout);
+            questionTemp = load("ressources/ListeQuestion.csv");
+            afficheStringTab(questionTemp);
         }
+        Question[] lQuestion = listeQuestion("ressources/ListeQuestion.csv");
 
         for(int i = 0; i<length(lab,1);i++){
             for(int j=0;j<length(lab,2);j++){
