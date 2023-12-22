@@ -381,6 +381,23 @@ class Labyrinthe extends Program{
 
     }
 
+    Question[] listeQuestion(String cheminFichier){
+        String[][] lQuestion = load(cheminFichier);
+        Question[] res = new Question[length(lQuestion, 1)-1];
+        for(int i = 0; i < length(res); i ++){
+            res[i] = newQuestion(lQuestion[i+1][0], lQuestion[i+1][1]);
+        }
+        return res;
+    }
+
+    void testListeQuestion(){
+        Question test = newQuestion("Quelle est la capitale de la France","paris");
+        Question test2 = newQuestion("Convertir 10 cm en m.","0,1");
+        Question[] tabTest = listeQuestion("ressources/ListeQuestion.csv");
+        assertEquals(test.question, tabTest[0].question);
+        assertEquals(test2.question, tabTest[length(tabTest)-1].question);
+    }
+
     boolean questionCorrect(Question q){ //Vérifie si on donne la bonne réponse
         String res = readString();
         return equals(toLowerCase(res), toLowerCase(q.reponse));
@@ -418,7 +435,7 @@ class Labyrinthe extends Program{
         char[][] salle = genererSalle("ressources/Lab/Salle"+nbr);
         afficheLab(salle);
     }
-    void algorithm(){
+    void _algorithm(){
         Salle[][] lab = genererLab(5); //genere le Layrinthe
         String[][] lQuestion = load("ressources/ListeQuestion.csv");
         print("Voulez vous ajouter des question ? oui (o), non (autre) : ");
