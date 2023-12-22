@@ -144,7 +144,10 @@ class Labyrinthe extends Program{
 
     String choixAlea(String chaine){
         for(int a = 0; a<4;a++){
-            if(charAt(chaine,a)=='.'||charAt(chaine,a)=='E'){
+            if(charAt(chaine,a)=='E'){
+                chaine=substring(chaine,0,a)+0+substring(chaine,a+1,length(chaine));
+            }
+            if(charAt(chaine,a)=='.'){
                 chaine=substring(chaine,0,a)+(int)(random()*2)+substring(chaine,a+1,length(chaine));
             }
         }
@@ -407,6 +410,7 @@ class Labyrinthe extends Program{
                 if(tab[i][j] == c){
                     return new int[]{i,j};
                 }
+                println();
             }
         }
         return new int[]{0,0};
