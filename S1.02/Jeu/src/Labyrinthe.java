@@ -175,7 +175,7 @@ class Labyrinthe extends Program{
         readString();
     }
 
-    int[] deplacement(char[][] Lab, char direction, int positionL, int positionC, Joueur j){ //vérifie si déplacement possible, si oui l'effectue
+    int[] deplacement(char[][] Lab, char direction, int positionL, int positionC, Joueur j, Question[] liste){ //vérifie si déplacement possible, si oui l'effectue
         if(direction == 'h'){
             afficheHelp();
         }
@@ -186,7 +186,7 @@ class Labyrinthe extends Program{
                 Lab[positionL-1][positionC] = 'P';
                 return new int[]{positionL-1, positionC};
             } else if(Lab[positionL-1][positionC] == 'M'){ //Si Monstre, affiche la question.
-                Question q = newQuestion("Quelle est la capitale de la France", "paris");
+                Question q = questionRandom(liste, j.score);
                 afficheQuestion(q, true);
                 if(questionCorrect(q)){ //En cas de bonne réponse efface le monstre
                     Lab[positionL-1][positionC] = '.';
@@ -399,7 +399,7 @@ class Labyrinthe extends Program{
     }
 
     Question questionRandom(Question[] liste, int nbUtilisees){
-        int choix = (int) (random()*length(liste)-nbUtilisees);
+        int choix = (int) (random()*(length(liste)-nbUtilisees));
         Question res = liste[choix];
         Question temp = liste[nbUtilisees];
         liste[choix] = temp;
@@ -444,7 +444,7 @@ class Labyrinthe extends Program{
         char[][] salle = genererSalle("ressources/Lab/Salle"+nbr);
         afficheLab(salle);
     }
-    void _algorithm(){
+    void algorithm(){
         Salle[][] lab = genererLab(5); //genere le Layrinthe
         String[][] questionTemp = load("ressources/ListeQuestion.csv");
         print("Voulez vous ajouter des question ? oui (o), non (autre) : ");
@@ -490,7 +490,7 @@ class Labyrinthe extends Program{
             println("" + j.pseudo + " / Score : " + j.score + " / PV : " + j.vie );
             int[] indiceP = indiceDe('P', salle);
             char choix = controleSaisie();
-            indiceP = deplacement(salle, choix, indiceP[0], indiceP[1], j);
+            indiceP = deplacement(salle, choix, indiceP[0], indiceP[1], j, lQuestion);
         }
         if(j.bossVaincu){
             print(readFile("ressources/img/Win.txt", true));
