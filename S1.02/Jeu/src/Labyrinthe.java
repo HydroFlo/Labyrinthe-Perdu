@@ -410,7 +410,6 @@ class Labyrinthe extends Program{
                 if(tab[i][j] == c){
                     return new int[]{i,j};
                 }
-                println();
             }
         }
         return new int[]{0,0};
