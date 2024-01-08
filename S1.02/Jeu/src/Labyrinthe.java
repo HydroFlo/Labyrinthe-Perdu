@@ -121,36 +121,61 @@ class Labyrinthe extends Program{
         String droite = substring(check,4,8);
         String bas = substring(check,8,12);
         String gauche = substring(check,12,16);
+        if(i==0){
+            haut = "0000";
+        }
+        if(i==length(lab,1)-1){
+            bas = "0000";
+        }
+        if(j==0){
+            gauche = "0000";
+        }
+        if(j==length(lab,2)-1){
+            droite="0000";
+        }
+        println(haut);
+        println(droite);
+        println(bas);
+        println(gauche);
         if(charAt(haut,2)=='1'){
             resultat=resultat+'1';
+        }else if(charAt(haut,2)=='0'){
+            resultat=resultat+'0';
         }else{resultat=resultat+'.';}
         if(charAt(droite,3)=='1'){
             resultat=resultat+'1';
+        }else if(charAt(droite,3)=='0'){
+            resultat=resultat+'0';
         }else{resultat=resultat+'.';}
         if(charAt(bas,0)=='1'){
             resultat=resultat+'1';
-            }else{resultat=resultat+'.';}
+        }else if(charAt(bas,0)=='0'){
+            resultat=resultat+'0';
+        }else{resultat=resultat+'.';}
         if(charAt(gauche,1)=='1'){
             resultat=resultat+'1';
+        }else if(charAt(gauche,1)=='0'){
+            resultat=resultat+'0';
         }else{resultat=resultat+'.';}
-        //println(resultat);
+        println(resultat);
         int nbalea=(int)(random()*10);
         while(!equals(salles[nbalea].sorties,choixAlea(resultat))){
+            print("Salle vérifier : ");
+            println(salles[nbalea].sorties);
             nbalea=(int)(random()*10);
             //println(nbalea);
         }
         lab[i][j]=salles[nbalea];
+        println("FINI");
     }
 
     String choixAlea(String chaine){
         for(int a = 0; a<4;a++){
-            if(charAt(chaine,a)=='E'){
-                chaine=substring(chaine,0,a)+0+substring(chaine,a+1,length(chaine));
-            }
             if(charAt(chaine,a)=='.'){
                 chaine=substring(chaine,0,a)+(int)(random()*2)+substring(chaine,a+1,length(chaine));
             }
         }
+        println(chaine);
         return(chaine);
     }
 
@@ -445,7 +470,7 @@ class Labyrinthe extends Program{
         afficheLab(salle);
     }
     void algorithm(){
-        Salle[][] lab = genererLab(5); //genere le Layrinthe
+        Salle[][] lab = genererLab(3); //genere le Layrinthe
         String[][] questionTemp = load("ressources/ListeQuestion.csv");
         print("Voulez vous ajouter des question ? oui (o), non (autre) : ");
         boolean ques = equals(toLowerCase(readString()), "o");
