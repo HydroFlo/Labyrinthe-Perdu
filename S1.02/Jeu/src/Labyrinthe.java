@@ -175,7 +175,25 @@ class Labyrinthe extends Program{
         readString();
     }
 
-    int[] deplacement(char[][] Lab, char direction, int positionL, int positionC, Joueur j, Question[] liste, Question[] listeBoss){ //vérifie si déplacement possible, si oui l'effectue
+    int[] changeSalle(char[][] Lab, int positionL, int positionC, int iSalle, int jSalle){
+        int newI = iSalle;
+        int newJ = jSalle;
+        if(positionC == 1){
+            newJ -= 1;
+        }
+        if(positionL == 1){
+            newI -= 1;
+        }
+        if(positionC == length(Lab, 2)-2){
+            newJ += 1;
+        }
+        if(positionC == length(Lab, 1)-2){
+            newI += 1;
+        }
+        return new int[]{newI, newJ};
+    }
+
+    int[] deplacement(char[][] Lab, char direction, int positionL, int positionC, Joueur j, Question[] liste, Question[] listeBoss, int[] indiceSalle){ //vérifie si déplacement possible, si oui l'effectue
         if(direction == 'h'){
             afficheHelp();
         }
@@ -203,6 +221,8 @@ class Labyrinthe extends Program{
                 } else {
                     j.vie -= 10;
                 }
+            } else if(Lab[positionL-1][positionC] == 'S'){
+                indiceSalle = changeSalle(Lab, positionL-1, positionC, indiceSalle[0], indiceSalle[1]);
             }
         }
 
@@ -444,7 +464,44 @@ class Labyrinthe extends Program{
         char[][] salle = genererSalle("ressources/Lab/Salle"+nbr);
         afficheLab(salle);
     }
-    void algorithm(){
+
+    int[] copy(int[] tab){ //copie un tableau d'entier
+        int[] res = new int[length(tab)];
+        for(int i = 0; i < length(res); i ++){
+            res[i] = tab[i];
+        }
+        return res;
+    }
+
+    void testCopy(){
+        int[] verif = new int[] {2,6,4,8};
+        int[] res = copy(verif);
+        assertArrayEquals(verif, res);
+    }
+
+    boolean equals(int[] tab1, int[] tab2){ //vérifie l'égalité entre 2 tableau d'entier
+        if(length(tab1) == length(tab2)){
+            for(int i = 0; i < length(tab1); i ++){
+                if(tab1[i] != tab2[i]){
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+
+    void testEqualsTabInt(){
+        int[] tab1 = new int[]{1,2,3};
+        int[] tab2 = new int[]{1,2,3};
+        int[] tab3 = new int[]{1,2,5};
+        int[] tab4 = new int[0];
+        assertTrue(equals(tab1, tab2));
+        assertFalse(equals(tab1, tab3));
+        assertFalse(equals(tab1, tab4));
+    }
+
+    void _algorithm(){
         Salle[][] lab = genererLab(5); //genere le Layrinthe
         String[][] questionTemp = load("ressources/ListeQuestion.csv");
         print("Voulez vous ajouter des question ? oui (o), non (autre) : ");
@@ -467,7 +524,7 @@ class Labyrinthe extends Program{
 
         print(readFile("ressources/img/Presentation.txt", true)); //affiche l'écran titre
         String lancer = readString();
-        while(lancer != ""){ //Vérifie que l'utilisateur fasse "Entrée" et si oui lance le jeu
+        while(!equals(lancer, "")){ //Vérifie que l'utilisateur fasse "Entrée" et si oui lance le jeu
             print(readFile("ressources/img/Presentation.txt", true));
             lancer = readString();
         }
@@ -476,9 +533,9 @@ class Labyrinthe extends Program{
 
         print("Rentrez votre pseudo : ");
         String pseudo = readString();
-        Joueur j = newJoueur(pseudo); //Création du joueur
-        
-        char[][] salle = genererSalle("ressources/Lab/Salle"+lab[0][0].numero);
+        Joueur joueur = newJoueur(pseudo); //Création du joueur
+        int[] indiceSalle = new int[]{0,0};
+        char[][] salle = genererSalle("ressources/Lab/Salle"+lab[indiceSalle[0]][indiceSalle[1]].numero);
         Question q = newQuestion("Quelle est la capital de la France", "paris");
         afficherSalle(lab[1][0].numero);
         int[] indiceM = indiceDe('P', salle);
@@ -486,14 +543,18 @@ class Labyrinthe extends Program{
         salle[indiceM[0]-3][indiceM[1]] = 'B';
         afficheStringTab(load("ressources/score.csv"));
         
-        while(j.vie > 0 && !j.bossVaincu){
+        while(joueur.vie > 0 && !joueur.bossVaincu){
+            int[] indiceSalleActu = copy(indiceSalle);
             afficheLab(salle);
-            println("" + j.pseudo + " / Score : " + j.score + " / PV : " + j.vie );
+            println("" + joueur.pseudo + " / Score : " + joueur.score + " / PV : " + joueur.vie );
             int[] indiceP = indiceDe('P', salle);
             char choix = controleSaisie();
-            indiceP = deplacement(salle, choix, indiceP[0], indiceP[1], j, lQuestion, lQuestionBoss);
+            indiceP = deplacement(salle, choix, indiceP[0], indiceP[1], joueur, lQuestion, lQuestionBoss, indiceSalle);
+            if(!equals())
+
+
         }
-        if(j.bossVaincu){
+        if(joueur.bossVaincu){
             print(readFile("ressources/img/Win.txt", true));
         } else {
             print(readFile("ressources/img/Lose.txt", true));
