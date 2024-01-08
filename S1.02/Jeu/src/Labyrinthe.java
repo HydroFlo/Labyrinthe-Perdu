@@ -595,7 +595,7 @@ class Labyrinthe extends Program{
                 salle[indiceP[0]][indiceP[1]] = 'P';
             }
             if(indiceSalle[0] == length(lab)/2 && indiceSalle[1] == length(lab)/2){
-                salle[length(salle, 1)][length(salle,2)] = 'B';
+                salle[length(salle, 1)/2][length(salle,2)/2] = 'B';
             }
 
 
