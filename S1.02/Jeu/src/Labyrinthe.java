@@ -15,7 +15,11 @@ class Labyrinthe extends Program{
                                     newSalle(7,"1001"),
                                     newSalle(8,"1011"),
                                     newSalle(9,"0011"),
-                                    newSalle(10,"0110")
+                                    newSalle(10,"0110"),
+                                    newSalle(11,"0100"),
+                                    newSalle(12,"0001"),
+                                    newSalle(13,"0010"),
+                                    newSalle(14,"1000"),
                                 };
     
 
@@ -131,7 +135,8 @@ class Labyrinthe extends Program{
             gauche = "0000";
         }
         if(j==length(lab,2)-1){
-            droite="0000";
+            droite = "0000";
+            println("DROITE");
         }
         println(haut);
         println(droite);
@@ -158,11 +163,11 @@ class Labyrinthe extends Program{
             resultat=resultat+'0';
         }else{resultat=resultat+'.';}
         println(resultat);
-        int nbalea=(int)(random()*10);
+        int nbalea=(int)(random()*14);
         while(!equals(salles[nbalea].sorties,choixAlea(resultat))){
             print("Salle vérifier : ");
             println(salles[nbalea].sorties);
-            nbalea=(int)(random()*10);
+            nbalea=(int)(random()*14);
             //println(nbalea);
         }
         lab[i][j]=salles[nbalea];
@@ -181,7 +186,6 @@ class Labyrinthe extends Program{
 
     Salle[][] genererLab(int nbSalle){ // genere un Layrinthe de nbSalle salle et d'une taille de 72 x 19 par salle !!!! IL FAUT QUE LE nbSalle SOINT IMPAIRE !!!!
         Salle[][] lab = new Salle[nbSalle][nbSalle];
-        lab[(nbSalle/2)+1][(nbSalle/2)+1] = salles[3];
         lab[0][0] = salles[0];
         for(int i=0;i<length(lab,1);i++){
             for(int j=0;j<length(lab,2);j++){
@@ -540,7 +544,7 @@ class Labyrinthe extends Program{
     }
 
     void algorithm(){
-        Salle[][] lab = genererLab(5); //genere le Layrinthe
+        Salle[][] lab = genererLab(3); //genere le Layrinthe
         String[][] questionTemp = load("ressources/ListeQuestion.csv");
         print("Voulez vous ajouter des question ? oui (o), non (autre) : ");
         boolean ques = equals(toLowerCase(readString()), "o");
