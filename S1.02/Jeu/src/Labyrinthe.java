@@ -603,6 +603,7 @@ class Labyrinthe extends Program{
         int[] indiceSalle = new int[]{0,0};
         char[][] salle = genererSalle("ressources/Lab/Salle"+lab[indiceSalle[0]][indiceSalle[1]].numero);
         Question q = newQuestion("Quelle est la capital de la France", "paris");
+        int rando = (int) (random() * 3)+1;
         afficherSalle(lab[1][0].numero);
         salle[length(salle,1)/2][length(salle,2)/2] = 'P';
         afficheStringTab(load("ressources/score.csv"));
@@ -617,9 +618,14 @@ class Labyrinthe extends Program{
             if(!equals(indiceSalleActu, indiceSalle)){
                 salle = genererSalle("ressources/Lab/Salle"+lab[indiceSalle[0]][indiceSalle[1]].numero);
                 salle[indiceP[0]][indiceP[1]] = 'P';
-            }
-            if(indiceSalle[0] == length(lab)/2 && indiceSalle[1] == length(lab)/2){
-                salle[length(salle, 1)/2][length(salle,2)/2] = 'B';
+                if(indiceSalle[0] == length(lab)/2 && indiceSalle[1] == length(lab)/2){
+                    salle[length(salle, 1)/2][length(salle,2)/2] = 'B';
+                } else {
+                    if (rando == 1){
+                        salle[length(salle, 1)/2][length(salle,2)/2] = 'M';
+                    }
+                    rando = (int) (random() * 3) + 1;
+                }
             }
 
 
