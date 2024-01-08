@@ -433,7 +433,7 @@ class Labyrinthe extends Program{
             newFile[i][0]= intitu;
             newFile[i][1]= rep;
         }
-        saveCSV(newFile, "ressources/ListeQuestion.csv");
+        saveCSV(newFile, "ressources/ListeQuestion.csv", '|');
 
     }
 
@@ -486,7 +486,7 @@ class Labyrinthe extends Program{
 
     Question questionRandom(Question[] liste, int nbUtilisees){
         int choix = (int) (random()*(length(liste)-nbUtilisees));
-        Question res = liste[choix];
+        Question res = liste[choix + nbUtilisees];
         Question temp = liste[nbUtilisees];
         liste[choix] = temp;
         liste[nbUtilisees] = res;
@@ -617,6 +617,9 @@ class Labyrinthe extends Program{
             if(!equals(indiceSalleActu, indiceSalle)){
                 salle = genererSalle("ressources/Lab/Salle"+lab[indiceSalle[0]][indiceSalle[1]].numero);
                 salle[indiceP[0]][indiceP[1]] = 'P';
+            }
+            if(indiceSalle[0] == length(lab)/2 && indiceSalle[1] == length(lab)/2){
+                salle[length(salle, 1)][length(salle,2)] = 'B';
             }
 
 
