@@ -594,6 +594,9 @@ class Labyrinthe extends Program{
                 salle = genererSalle("ressources/Lab/Salle"+lab[indiceSalle[0]][indiceSalle[1]].numero);
                 salle[indiceP[0]][indiceP[1]] = 'P';
             }
+            if(indiceSalle[0] == length(lab)/2 && indiceSalle[1] == length(lab)/2){
+                salle[length(salle, 1)][length(salle,2)] = 'B';
+            }
 
 
         }
