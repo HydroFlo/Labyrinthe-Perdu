@@ -159,12 +159,12 @@ class Labyrinthe extends Program{
         }else{resultat=resultat+'.';}
         println(resultat);
         int nbalea=(int)(random()*10);
-        while(!equals(salles[nbalea].sorties,choixAlea(resultat))){
+        /*while(!equals(salles[nbalea].sorties,choixAlea(resultat))){
             print("Salle vérifier : ");
             println(salles[nbalea].sorties);
             nbalea=(int)(random()*10);
             //println(nbalea);
-        }
+        }*/
         lab[i][j]=salles[nbalea];
         println("FINI");
     }
@@ -207,7 +207,7 @@ class Labyrinthe extends Program{
         }
         if(positionL == 1){
             indiceSalle[0] -= 1;
-            return new int[]{length(Lab, 2)-3, 36};
+            return new int[]{length(Lab, 1)-3, length(Lab, 2)/2};
         }
         if(positionC == length(Lab, 2)-2){
             indiceSalle[1] += 1;
@@ -215,7 +215,7 @@ class Labyrinthe extends Program{
         }
         if(positionL == length(Lab, 1)-2){
             indiceSalle[0] += 1;
-            return new int[]{2, 36};
+            return new int[]{2, length(Lab, 2)/2};
         }
         return new int[]{positionL, positionC};
     }
@@ -576,9 +576,7 @@ class Labyrinthe extends Program{
         char[][] salle = genererSalle("ressources/Lab/Salle"+lab[indiceSalle[0]][indiceSalle[1]].numero);
         Question q = newQuestion("Quelle est la capital de la France", "paris");
         afficherSalle(lab[1][0].numero);
-        int[] indiceM = indiceDe('P', salle);
-        salle[indiceM[0]-1][indiceM[1]] = 'M';
-        salle[indiceM[0]-3][indiceM[1]] = 'B';
+        salle[length(salle,1)/2][length(salle,2)/2] = 'P';
         afficheStringTab(load("ressources/score.csv"));
         
         while(joueur.vie > 0 && !joueur.bossVaincu){
