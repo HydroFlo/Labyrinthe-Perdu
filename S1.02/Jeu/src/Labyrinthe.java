@@ -175,19 +175,24 @@ class Labyrinthe extends Program{
         readString();
     }
 
-    void changeSalle(char[][] Lab, int positionL, int positionC, int[] indiceSalle){
+    int[] changeSalle(char[][] Lab, int positionL, int positionC, int[] indiceSalle){
         if(positionC == 1){
             indiceSalle[1] -= 1;
+            return new int[]{9, length(Lab, 2)-3};
         }
         if(positionL == 1){
             indiceSalle[0] -= 1;
+            return new int[]{length(Lab, 2)-3, 36};
         }
         if(positionC == length(Lab, 2)-2){
             indiceSalle[1] += 1;
+            return new int[]{9, 2};
         }
         if(positionL == length(Lab, 1)-2){
             indiceSalle[0] += 1;
+            return new int[]{2, 36};
         }
+        return new int[]{positionL, positionC};
     }
 
     int[] deplacement(char[][] Lab, char direction, int positionL, int positionC, Joueur j, Question[] liste, Question[] listeBoss, int[] indiceSalle){ //vérifie si déplacement possible, si oui l'effectue
@@ -219,7 +224,8 @@ class Labyrinthe extends Program{
                     j.vie -= 10;
                 }
             } else if(Lab[positionL-1][positionC] == 'S'){
-                changeSalle(Lab, positionL-1, positionC, indiceSalle);
+                Lab[positionL][positionC] = '.';
+                return changeSalle(Lab, positionL-1, positionC, indiceSalle);
             }
         }
 
@@ -247,7 +253,8 @@ class Labyrinthe extends Program{
                     j.vie -= 10;
                 }
             } else if (Lab[positionL+1][positionC] == 'S'){
-                changeSalle(Lab, positionL+1, positionC, indiceSalle);
+                Lab[positionL][positionC] = '.';
+                return changeSalle(Lab, positionL+1, positionC, indiceSalle);
             }
         }
 
@@ -275,7 +282,8 @@ class Labyrinthe extends Program{
                     j.vie -= 10;
                 }
             }  else if (Lab[positionL][positionC-1] == 'S'){
-                changeSalle(Lab, positionL, positionC-1, indiceSalle);
+                Lab[positionL][positionC] = '.';
+                return changeSalle(Lab, positionL, positionC-1, indiceSalle);
             }
         }
 
@@ -303,7 +311,9 @@ class Labyrinthe extends Program{
                     j.vie -= 10;
                 }
             }  else if (Lab[positionL][positionC+1] == 'S'){
-                changeSalle(Lab, positionL, positionC+1, indiceSalle);
+                Lab[positionL][positionC] = '.';
+                return changeSalle(Lab, positionL, positionC+1, indiceSalle);
+
             }
         }
         return new int[]{positionL, positionC};
@@ -555,6 +565,7 @@ class Labyrinthe extends Program{
             indiceP = deplacement(salle, choix, indiceP[0], indiceP[1], joueur, lQuestion, lQuestionBoss, indiceSalle);
             if(!equals(indiceSalleActu, indiceSalle)){
                 salle = genererSalle("ressources/Lab/Salle"+lab[indiceSalle[0]][indiceSalle[1]].numero);
+                salle[indiceP[0]][indiceP[1]] = 'P';
             }
 
 
