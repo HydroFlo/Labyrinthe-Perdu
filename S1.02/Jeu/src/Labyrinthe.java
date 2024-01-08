@@ -159,12 +159,12 @@ class Labyrinthe extends Program{
         }else{resultat=resultat+'.';}
         println(resultat);
         int nbalea=(int)(random()*10);
-        /*while(!equals(salles[nbalea].sorties,choixAlea(resultat))){
+        while(!equals(salles[nbalea].sorties,choixAlea(resultat))){
             print("Salle vérifier : ");
             println(salles[nbalea].sorties);
             nbalea=(int)(random()*10);
             //println(nbalea);
-        }*/
+        }
         lab[i][j]=salles[nbalea];
         println("FINI");
     }
