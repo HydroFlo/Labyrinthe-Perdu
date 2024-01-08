@@ -169,7 +169,7 @@ class Labyrinthe extends Program{
             println(salles[nbalea].sorties);
             nbalea=(int)(random()*14);
             //println(nbalea);
-        }*/
+        }
         lab[i][j]=salles[nbalea];
         println("FINI");
     }
