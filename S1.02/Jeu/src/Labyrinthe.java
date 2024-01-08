@@ -20,6 +20,7 @@ class Labyrinthe extends Program{
                                     newSalle(12,"0001"),
                                     newSalle(13,"0010"),
                                     newSalle(14,"1000"),
+                                    newSalle(15,"0000")
                                 };
     
 
@@ -104,16 +105,16 @@ class Labyrinthe extends Program{
         String resultat = "";
         if (i<length(lab,1) && i>=1 && lab[i-1][j]!=null){
             resultat = resultat + lab[i-1][j].sorties;
-        }else{resultat=resultat+"EEEE";}
+        }else{resultat=resultat+"....";}
         if (j<length(lab,2)-1 && lab[i][j+1]!=null){
             resultat = resultat + lab[i][j+1].sorties;
-        }else{resultat=resultat+"EEEE";}
+        }else{resultat=resultat+"....";}
         if (i<length(lab,1)-1 && lab[i+1][j]!=null){
             resultat = resultat + lab[i+1][j].sorties;
-        }else{resultat=resultat+"EEEE";}
+        }else{resultat=resultat+"....";}
         if (j<length(lab,2)&& j>=1 && lab[i][j-1]!=null){
             resultat = resultat + lab[i][j-1].sorties;
-        }else{resultat=resultat+"EEEE";}
+        }else{resultat=resultat+"....";}
         //println(resultat);
         return(resultat);
     }
@@ -142,35 +143,58 @@ class Labyrinthe extends Program{
         println(droite);
         println(bas);
         println(gauche);
-        if(charAt(haut,2)=='1'){
-            resultat=resultat+'1';
-        }else if(charAt(haut,2)=='0'){
-            resultat=resultat+'0';
-        }else{resultat=resultat+'.';}
-        if(charAt(droite,3)=='1'){
-            resultat=resultat+'1';
-        }else if(charAt(droite,3)=='0'){
-            resultat=resultat+'0';
-        }else{resultat=resultat+'.';}
-        if(charAt(bas,0)=='1'){
-            resultat=resultat+'1';
-        }else if(charAt(bas,0)=='0'){
-            resultat=resultat+'0';
-        }else{resultat=resultat+'.';}
-        if(charAt(gauche,1)=='1'){
-            resultat=resultat+'1';
-        }else if(charAt(gauche,1)=='0'){
-            resultat=resultat+'0';
-        }else{resultat=resultat+'.';}
+        resultat = resultat + charAt(haut,2);
+        resultat = resultat + charAt(droite,3);
+        resultat = resultat + charAt(bas,0);
+        resultat = resultat + charAt(gauche,1);
+        // if(charAt(haut,2)=='1'){
+        //     resultat=resultat+'1';
+        // }else if(charAt(haut,2)=='0'){
+        //     resultat=resultat+'0';
+        // }else{resultat=resultat+'.';}
+
+        // if(charAt(droite,3)=='1'){
+        //     resultat=resultat+'1';
+        // }else if(charAt(droite,3)=='0'){
+        //     resultat=resultat+'0';
+        // }else{resultat=resultat+'.';}
+
+        // if(charAt(bas,0)=='1'){
+        //     resultat=resultat+'1';
+        // }else if(charAt(bas,0)=='0'){
+        //     resultat=resultat+'0';
+        // }else{resultat=resultat+'.';}
+
+        // if(charAt(gauche,1)=='1'){
+        //     resultat=resultat+'1';
+        // }else if(charAt(gauche,1)=='0'){
+        //     resultat=resultat+'0';
+        // }else{resultat=resultat+'.';}
+
         println(resultat);
-        int nbalea=(int)(random()*10);
-        while(!equals(salles[nbalea].sorties,choixAlea(resultat))){
-            print("Salle vérifier : ");
-            println(salles[nbalea].sorties);
-            nbalea=(int)(random()*14);
-            //println(nbalea);
+
+
+        if(equals(resultat,".000")||equals(resultat,"1000")){
+            lab[i][j]=salles[14];
+        }else if(equals(resultat,"0.00")||equals(resultat,"0100")){
+            lab[i][j]=salles[11];
+        }else if(equals(resultat,"00.0")||equals(resultat,"0010")){
+            lab[i][j]=salles[13];
+        }else if(equals(resultat,"000.")||equals(resultat,"0001")){
+            lab[i][j]=salles[12];
+        }else if (equals(resultat,"0000")){
+            lab[i][j]=salles[15];
+        }else{
+            int nbalea=(int)(random()*10);
+            while(!equals(salles[nbalea].sorties,choixAlea(resultat))){
+                print("Salle vérifier : ");
+                println(salles[nbalea].sorties);
+                nbalea=(int)(random()*10);
+                //println(nbalea);
+                
+            }
+            lab[i][j]=salles[nbalea];
         }
-        lab[i][j]=salles[nbalea];
         println("FINI");
     }
 
