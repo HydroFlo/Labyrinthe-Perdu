@@ -6,7 +6,7 @@ Contacts : alexandre.dehaine.etu@univ-lille.fr , florian.gambirasio.etu@univ-lil
 
 # Présentation de Labyrinthe Perdu
 
-Labyrinthe Perdu est un jeu d’aventure se déroulant dans un labyrinthe généré aléatoirement dans lequel vous vous déplacez, battez des monstres en répondant a des question éducatives. Chaque mauvaise questions vous fait perdre de la vie, lorsque vous tombez à zéro, vous perdez. Pour gagner le jeu, il faut vaincre le boss, il a des question spécifique et plus ardu.
+Labyrinthe Perdu est un jeu d’aventure se déroulant dans un labyrinthe généré aléatoirement dans lequel vous vous déplacez, battez des monstres en répondant à des questions éducatives. Chaque mauvaise réponses vous fait perdre de la vie, lorsque vous tombez à zéro, vous perdez. Pour gagner le jeu, il faut vaincre le boss, il a des questions spécifiques et plus ardues.
 
 Des captures d'écran illustrant le fonctionnement du logiciel sont proposées dans le répertoire shots.
 
