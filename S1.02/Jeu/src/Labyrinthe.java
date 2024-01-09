@@ -616,7 +616,7 @@ class Labyrinthe extends Program{
         boolean ques = equals(toLowerCase(readString()), "o");
         if(ques){
             print("Combien voulez vous en ajouter ? : ");
-            int nbAjout = nbFromString(0);
+            int nbAjout = nbFromString(1);
             ajoutQuestion(questionTemp, nbAjout);
             questionTemp = load("ressources/ListeQuestion.csv");
             afficheStringTab(questionTemp);
