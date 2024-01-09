@@ -491,7 +491,7 @@ class Labyrinthe extends Program{
             for(int k = 0; k < 58-length(file[i][0]); k ++){
                 vide += " ";
             }
-            println("####     " + file[i][0] + vide + file[i][0] + "       ####");
+            println("####     " + file[i][0] + vide + file[i][1] + "       ####");
         }
     }
 
