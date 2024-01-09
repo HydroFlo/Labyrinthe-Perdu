@@ -433,12 +433,28 @@ class Labyrinthe extends Program{
             newFile[i][0]= intitu;
             newFile[i][1]= rep;
         }
-        saveCSV(newFile, "ressources/ListeQuestion.csv", '|');
+        saveCSV(newFile, "ressources/ListeQuestion.csv");
 
     }
 
     void ajoutScore(String[][] file, String pseudo, int score){ //ajout de Score (optionnel à faire plus tard)
+        if(score > file[length(file,1)-1][1]){
+            int i = 0; //permet de compter d'ajouter les fichier de file dans newFile après ajout de ligne
+            String[][] newFile = new String[length(file, 1)][length(file, 2)];
+            for(int i1 = 0; i1 < length(file, 1); i1 ++){ //copie le fichier de base
+                if(score >= file[i1][1]){ //ajoute le score du joueur a la place qu'il mérite (en cas d'égalité remplace l'ancien ;) )
+                    newFile[i1][0] = pseudo;
+                    newFile[i1][1] = score;
+                } else{ //sinon remet les ancienne ligne
+                    for(int j1 = 0; j1 < length(file, 2); j1 ++){
+                        newFile[i][j1] = file[i][j1];
+                    }
+                    i = i + 1; //incrémente i pour savoir quelle ligne de l'ancien fichier ont été mise dans le nouveau
+                }
 
+            }
+            saveCSV(newFile, "ressources/score.csv");
+        }
     }
 
     void afficheStringTab(String[][] tab){ //Affiche un tableau de String a 2 dimension
@@ -612,6 +628,7 @@ class Labyrinthe extends Program{
         int tailleLab = nbFromString(3);
         Salle[][] lab = genererLab(tailleLab); //genere le Layrinthe
         String[][] questionTemp = load("ressources/ListeQuestion.csv");
+        String[][] tabScore = load("ressources/score.csv");
         print("Voulez vous ajouter des question ? oui (o), non (autre) : ");
         boolean ques = equals(toLowerCase(readString()), "o");
         if(ques){
@@ -644,7 +661,6 @@ class Labyrinthe extends Program{
         Joueur joueur = newJoueur(pseudo); //Création du joueur
         int[] indiceSalle = new int[]{0,0};
         char[][] salle = genererSalle("ressources/Lab/Salle"+lab[indiceSalle[0]][indiceSalle[1]].numero);
-        Question q = newQuestion("Quelle est la capital de la France", "paris");
         int rando = (int) (random() * 3)+1;
         afficherSalle(lab[1][0].numero);
         salle[length(salle,1)/2][length(salle,2)/2] = 'P';
@@ -677,5 +693,6 @@ class Labyrinthe extends Program{
         } else {
             print(readFile("ressources/img/Lose.txt", true));
         }  
+        ajoutScore(tabScore, joueur.pseudo, joueur.score);
     }
 }
