@@ -433,12 +433,28 @@ class Labyrinthe extends Program{
             newFile[i][0]= intitu;
             newFile[i][1]= rep;
         }
-        saveCSV(newFile, "ressources/ListeQuestion.csv", '|');
+        saveCSV(newFile, "ressources/ListeQuestion.csv");
 
     }
 
     void ajoutScore(String[][] file, String pseudo, int score){ //ajout de Score (optionnel à faire plus tard)
+        if(score > file[length(file,1)-1][1]){
+            int i = 0; //permet de compter d'ajouter les fichier de file dans newFile après ajout de ligne
+            String[][] newFile = new String[length(file, 1)][length(file, 2)];
+            for(int i1 = 0; i1 < length(file, 1); i1 ++){ //copie le fichier de base
+                if(score >= file[i1][1]){ //ajoute le score du joueur a la place qu'il mérite (en cas d'égalité remplace l'ancien ;) )
+                    newFile[i1][0] = pseudo;
+                    newFile[i1][1] = score;
+                } else{ //sinon remet les ancienne ligne
+                    for(int j1 = 0; j1 < length(file, 2); j1 ++){
+                        newFile[i][j1] = file[i][j1];
+                    }
+                    i = i + 1; //incrémente i pour savoir quelle ligne de l'ancien fichier ont été mise dans le nouveau
+                }
 
+            }
+            saveCSV(newFile, "ressources/score.csv");
+        }
     }
 
     void afficheStringTab(String[][] tab){ //Affiche un tableau de String a 2 dimension
@@ -567,14 +583,57 @@ class Labyrinthe extends Program{
         assertFalse(equals(tab1, tab4));
     }
 
+    boolean estInt(String verif){
+        if(length(verif) == 0){
+            return false;
+        }
+        for(int i = 0; i < length(verif); i ++){
+            if(charAt(verif, i) < '0' || '9' < charAt(verif, i)){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    void testEstInt(){
+        String mot1 = "0t6";
+        String mot2 = "54";
+        String mot3 = "Lolilol";
+        String mot4 = "";
+        assertFalse(estInt(mot1));
+        assertTrue(estInt(mot2));
+        assertFalse(estInt(mot3));
+        assertFalse(estInt(mot4));
+    }
+
+    int nbFromString(int minimum){ //Demande un nombre à l'utilisateur tant qu'il rentre autre chose qu'un nombre ou un nombre inférieur à la limite
+        int nbAjout = 0;
+        while(nbAjout < minimum){
+            String nb = readString();
+            while(!estInt(nb)){
+                print("Veuillez entrer un nombre valide : ");
+                nb = readString();
+            }
+            nbAjout = stringToInt(nb);
+            if(nbAjout < minimum ){
+                print("Veuillez choisir un nombre supérieur ou égale à "+ minimum +" : ");
+            }
+            
+        }
+        return nbAjout;
+    }
+
     void algorithm(){
-        Salle[][] lab = genererLab(13); //genere le Layrinthe
+        println("Quel taille voulez vous pour le labyrinthe (la taille sera en : N x N ) ?");
+        int tailleLab = nbFromString(3);
+        Salle[][] lab = genererLab(tailleLab); //genere le Layrinthe
         String[][] questionTemp = load("ressources/ListeQuestion.csv");
+        String[][] tabScore = load("ressources/score.csv");
         print("Voulez vous ajouter des question ? oui (o), non (autre) : ");
         boolean ques = equals(toLowerCase(readString()), "o");
         if(ques){
             print("Combien voulez vous en ajouter ? : ");
-            int nbAjout = readInt();
+            int nbAjout = nbFromString(1);
             ajoutQuestion(questionTemp, nbAjout);
             questionTemp = load("ressources/ListeQuestion.csv");
             afficheStringTab(questionTemp);
@@ -602,7 +661,7 @@ class Labyrinthe extends Program{
         Joueur joueur = newJoueur(pseudo); //Création du joueur
         int[] indiceSalle = new int[]{0,0};
         char[][] salle = genererSalle("ressources/Lab/Salle"+lab[indiceSalle[0]][indiceSalle[1]].numero);
-        Question q = newQuestion("Quelle est la capital de la France", "paris");
+        int rando = (int) (random() * 3)+1;
         afficherSalle(lab[1][0].numero);
         salle[length(salle,1)/2][length(salle,2)/2] = 'P';
         afficheStringTab(load("ressources/score.csv"));
@@ -617,9 +676,14 @@ class Labyrinthe extends Program{
             if(!equals(indiceSalleActu, indiceSalle)){
                 salle = genererSalle("ressources/Lab/Salle"+lab[indiceSalle[0]][indiceSalle[1]].numero);
                 salle[indiceP[0]][indiceP[1]] = 'P';
-            }
-            if(indiceSalle[0] == length(lab)/2 && indiceSalle[1] == length(lab)/2){
-                salle[length(salle, 1)][length(salle,2)] = 'B';
+                if(indiceSalle[0] == length(lab)/2 && indiceSalle[1] == length(lab)/2){
+                    salle[length(salle, 1)/2][length(salle,2)/2] = 'B';
+                } else {
+                    if (rando == 1){
+                        salle[length(salle, 1)/2][length(salle,2)/2] = 'M';
+                    }
+                    rando = (int) (random() * 3) + 1;
+                }
             }
 
 
@@ -629,5 +693,6 @@ class Labyrinthe extends Program{
         } else {
             print(readFile("ressources/img/Lose.txt", true));
         }  
+        ajoutScore(tabScore, joueur.pseudo, joueur.score);
     }
 }
