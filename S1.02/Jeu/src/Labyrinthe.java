@@ -567,6 +567,29 @@ class Labyrinthe extends Program{
         assertFalse(equals(tab1, tab4));
     }
 
+    boolean estInt(String verif){
+        if(length(verif) == 0){
+            return false;
+        }
+        for(int i = 0; i < length(verif); i ++){
+            if(charAt(verif, i) < '0' || '9' < charAt(verif, i)){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    void testEstInt(){
+        String mot1 = "0t6";
+        String mot2 = "54";
+        String mot3 = "Lolilol";
+        String mot4 = "";
+        assertFalse(estInt(mot1));
+        assertTrue(estInt(mot2));
+        assertFalse(estInt(mot3));
+        assertFalse(estInt(mot4));
+    }
+
     void algorithm(){
         Salle[][] lab = genererLab(3); //genere le Layrinthe
         String[][] questionTemp = load("ressources/ListeQuestion.csv");
@@ -574,7 +597,19 @@ class Labyrinthe extends Program{
         boolean ques = equals(toLowerCase(readString()), "o");
         if(ques){
             print("Combien voulez vous en ajouter ? : ");
-            int nbAjout = readInt();
+            int nbAjout = 0;
+            while(nbAjout <= 0){
+                String nb = readString();
+                while(!estInt(nb)){
+                    print("Veuillez entrer un nombre valide : ");
+                    nb = readString();
+                }
+                nbAjout = stringToInt(nb);
+                if(nbAjout <= 0 ){
+                    print("Veuillez choisir un nombre positif non nul : ");
+                }
+                
+            }
             ajoutQuestion(questionTemp, nbAjout);
             questionTemp = load("ressources/ListeQuestion.csv");
             afficheStringTab(questionTemp);
