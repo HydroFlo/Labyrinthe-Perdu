@@ -80,12 +80,12 @@ class Labyrinthe extends Program{
         return res;
     }
 
-    char controleSaisie(){ // verifie que l'utilisateur saisisse bien 1 caractere
+    String controleSaisie(){ // verifie que l'utilisateur saisisse bien 1 caractere
         String choix;
         do{
             choix = toLowerCase(readString());
-        }while(length(choix)!= 1);
-        return charAt(choix, 0);
+        }while(length(choix) != 1 && length(choix) != 2);
+        return choix;
     }
 
     char[][] genererSalle(String cheminFichier){ // génère une grille d'une du labyrinthe d'après un fichier (taille 72x19)
@@ -444,14 +444,14 @@ class Labyrinthe extends Program{
             boolean fait = false;
             newFile[0][0] = file[0][0];
             newFile[0][1] = file[0][1];
-            for(int i1 = 1; i1 < length(file, 1); i1 ++){ //copie le fichier de base
-                if(score >= stringToInt(file[i1][1]) && !fait){ //ajoute le score du joueur a la place qu'il mérite (en cas d'égalité remplace l'ancien ;) )
+            for(int i1 = 1; i1 < length(newFile, 1); i1 ++){ //copie le fichier de base
+                if(score >= stringToInt(file[i][1]) && !fait){ //ajoute le score du joueur a la place qu'il mérite (en cas d'égalité remplace l'ancien ;) )
                     newFile[i1][0] = pseudo;
                     newFile[i1][1] = "" + score;
                     fait = true;
                 } else{ //sinon remet les ancienne ligne
                     for(int j1 = 0; j1 < length(file, 2); j1 ++){
-                        newFile[i][j1] = file[i][j1];
+                        newFile[i1][j1] = file[i][j1];
                     }
                     i = i + 1; //incrémente i pour savoir quelle ligne de l'ancien fichier ont été mise dans le nouveau
                 }
@@ -675,8 +675,18 @@ class Labyrinthe extends Program{
             afficheLab(salle);
             println("" + joueur.pseudo + " / Score : " + joueur.score + " / PV : " + joueur.vie );
             int[] indiceP = indiceDe('P', salle);
-            char choix = controleSaisie();
-            indiceP = deplacement(salle, choix, indiceP[0], indiceP[1], joueur, lQuestion, lQuestionBoss, indiceSalle);
+            String choix = controleSaisie();
+            int nbMove = 1;
+            if(length(choix) == 2){
+                nbMove = charToInt(charAt(choix,1));
+            }
+            for(int i = 0; i < nbMove; i ++){
+                indiceP = deplacement(salle, charAt(choix,0), indiceP[0], indiceP[1], joueur, lQuestion, lQuestionBoss, indiceSalle);
+                delay(100);
+                println(nbMove);
+                println(i);
+                afficheLab(salle);
+            }
             if(!equals(indiceSalleActu, indiceSalle)){
                 salle = genererSalle("ressources/Lab/Salle"+lab[indiceSalle[0]][indiceSalle[1]].numero);
                 salle[indiceP[0]][indiceP[1]] = 'P';
@@ -689,8 +699,6 @@ class Labyrinthe extends Program{
                     rando = (int) (random() * 3) + 1;
                 }
             }
-
-
         }
         if(joueur.bossVaincu){
             print(readFile("ressources/img/Win.txt", true));
