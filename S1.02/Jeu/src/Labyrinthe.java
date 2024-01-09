@@ -568,7 +568,7 @@ class Labyrinthe extends Program{
     }
 
     void algorithm(){
-        Salle[][] lab = genererLab(3); //genere le Layrinthe
+        Salle[][] lab = genererLab(13); //genere le Layrinthe
         String[][] questionTemp = load("ressources/ListeQuestion.csv");
         print("Voulez vous ajouter des question ? oui (o), non (autre) : ");
         boolean ques = equals(toLowerCase(readString()), "o");
