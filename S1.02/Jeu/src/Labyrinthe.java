@@ -590,26 +590,33 @@ class Labyrinthe extends Program{
         assertFalse(estInt(mot4));
     }
 
+    int nbFromString(int minimum){ //Demande un nombre à l'utilisateur tant qu'il rentre autre chose qu'un nombre ou un nombre inférieur à la limite
+        int nbAjout = 0;
+        while(nbAjout < minimum){
+            String nb = readString();
+            while(!estInt(nb)){
+                print("Veuillez entrer un nombre valide : ");
+                nb = readString();
+            }
+            nbAjout = stringToInt(nb);
+            if(nbAjout < minimum ){
+                print("Veuillez choisir un nombre supérieur ou égale à "+ minimum +" : ");
+            }
+            
+        }
+        return nbAjout;
+    }
+
     void algorithm(){
-        Salle[][] lab = genererLab(3); //genere le Layrinthe
+        println("Quel taille voulez vous pour le labyrinthe (la taille sera en : N x N ) ?");
+        int tailleLab = nbFromString(3);
+        Salle[][] lab = genererLab(tailleLab); //genere le Layrinthe
         String[][] questionTemp = load("ressources/ListeQuestion.csv");
         print("Voulez vous ajouter des question ? oui (o), non (autre) : ");
         boolean ques = equals(toLowerCase(readString()), "o");
         if(ques){
             print("Combien voulez vous en ajouter ? : ");
-            int nbAjout = 0;
-            while(nbAjout <= 0){
-                String nb = readString();
-                while(!estInt(nb)){
-                    print("Veuillez entrer un nombre valide : ");
-                    nb = readString();
-                }
-                nbAjout = stringToInt(nb);
-                if(nbAjout <= 0 ){
-                    print("Veuillez choisir un nombre positif non nul : ");
-                }
-                
-            }
+            int nbAjout = nbFromString(0);
             ajoutQuestion(questionTemp, nbAjout);
             questionTemp = load("ressources/ListeQuestion.csv");
             afficheStringTab(questionTemp);
