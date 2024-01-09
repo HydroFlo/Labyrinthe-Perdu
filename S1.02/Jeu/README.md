@@ -1,16 +1,16 @@
-Labyrinthe
+Labyrinthe Perdu
 ===========
 
 Développé par Alexandre Dehaine et Florian Gambirasio
 Contacts : alexandre.dehaine.etu@univ-lille.fr , florian.gambirasio.etu@univ-lille.fr
 
-# Présentation de Labyrinthe
+# Présentation de Labyrinthe Perdu
 
 Labyrinthe Perdu est un jeu d’aventure se déroulant dans un labyrinthe généré aléatoirement dans lequel vous vous déplacez, battez des monstres en répondant a des question éducatives. Chaque mauvaise questions vous fait perdre de la vie, lorsque vous tombez à zéro, vous perdez. Pour gagner le jeu, il faut vaincre le boss, il a des question spécifique et plus ardu.
 
 Des captures d'écran illustrant le fonctionnement du logiciel sont proposées dans le répertoire shots.
 
-# Utilisation de Labyrinthe
+# Utilisation de Labyrinthe Perdu
 
 Afin d'utiliser le projet, il suffit de taper les commandes suivantes dans un terminal :
 
