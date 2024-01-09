@@ -471,15 +471,11 @@ class Labyrinthe extends Program{
     }
 
     void afficheQuestion(Question q, boolean reponseLibre){ //Affiche les questions
-        println("################################################################################" + '\n' +
-                "####@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@####" + '\n' +
-                "####@                                                                      @####");
+        print(readFile("ressources/img/entete.txt", true));
         String intituler = formatIntituler(q.question, 48*4, 48);
         afficheIntituler(intituler);
         if(reponseLibre){
-            println("####@                                                                      @####" + '\n' +
-                    "####@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@####" + '\n' +
-                    "################################################################################");
+            print(readFile("ressources/img/fermeEntete.txt", true));
             for(int i = 0; i < 13; i ++){
                 println();
             }
@@ -489,12 +485,13 @@ class Labyrinthe extends Program{
 
     void afficheScore(){
         String[][] file = load("ressources/score.csv");
+        print(readFile("ressources/img/Score.txt", true));
         for(int i = 1; i < length(file,1); i ++){
-            print("        ");
-            for(int j = 0; j < length(file,2); j ++){
-                print(file[i][j] + "                    ");
+            String vide = "";
+            for(int k = 0; k < 58-length(file[i][0]); k ++){
+                vide += " ";
             }
-            println();
+            println("####     " + file[i][0] + vide + file[i][0] + "       ####");
         }
     }
 
@@ -680,6 +677,7 @@ class Labyrinthe extends Program{
         afficherSalle(lab[1][0].numero);
         salle[length(salle,1)/2][length(salle,2)/2] = 'P';
         afficheStringTab(load("ressources/score.csv"));
+        afficheLab(salle);
         
         while(joueur.vie > 0 && !joueur.bossVaincu){
             int[] indiceSalleActu = copy(indiceSalle);
@@ -693,10 +691,6 @@ class Labyrinthe extends Program{
             }
             for(int i = 0; i < nbMove; i ++){
                 indiceP = deplacement(salle, charAt(choix,0), indiceP[0], indiceP[1], joueur, lQuestion, lQuestionBoss, indiceSalle);
-                delay(100);
-                println(nbMove);
-                println(i);
-                afficheLab(salle);
             }
             if(!equals(indiceSalleActu, indiceSalle)){
                 salle = genererSalle("ressources/Lab/Salle"+lab[indiceSalle[0]][indiceSalle[1]].numero);
