@@ -396,7 +396,7 @@ class Labyrinthe extends Program{
         assertEquals(verif, formatIntituler(test, 48, 12));
     }        
 
-    void afficheIntituler(String intituler){ //prend une chaine et l'affiche selon la forme d'affichage des question (voir ressource)
+    void afficheIntituler(String intituler){ //prend une chaine et l'affiche selon la forme d'affichage des question (voir ressources)
         print("                ");
         for(int i = 0; i < length(intituler); i ++){
             print(charAt(intituler, i));
@@ -485,6 +485,17 @@ class Labyrinthe extends Program{
             }
         }
 
+    }
+
+    void afficheScore(){
+        String[][] file = load("ressources/score.csv");
+        for(int i = 1; i < length(file,1); i ++){
+            print("        ");
+            for(int j = 0; j < length(file,2); j ++){
+                print(file[i][j] + "                    ");
+            }
+            println();
+        }
     }
 
     Question[] listeQuestion(String cheminFichier){ //Charge le csv des question et renvoie un tableau de question qui possède une Question par case
@@ -706,5 +717,8 @@ class Labyrinthe extends Program{
             print(readFile("ressources/img/Lose.txt", true));
         }  
         ajoutScore(tabScore, joueur.pseudo, joueur.score);
+        if(equals(toLowerCase(readString()), "s")){
+            afficheScore();
+        }
     }
 }
