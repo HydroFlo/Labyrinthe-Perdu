@@ -438,13 +438,17 @@ class Labyrinthe extends Program{
     }
 
     void ajoutScore(String[][] file, String pseudo, int score){ //ajout de Score (optionnel à faire plus tard)
-        if(score > file[length(file,1)-1][1]){
-            int i = 0; //permet de compter d'ajouter les fichier de file dans newFile après ajout de ligne
+        if(score > stringToInt(file[length(file,1)-1][1])){
+            int i = 1; //permet de compter d'ajouter les fichier de file dans newFile après ajout de ligne
             String[][] newFile = new String[length(file, 1)][length(file, 2)];
-            for(int i1 = 0; i1 < length(file, 1); i1 ++){ //copie le fichier de base
-                if(score >= file[i1][1]){ //ajoute le score du joueur a la place qu'il mérite (en cas d'égalité remplace l'ancien ;) )
+            boolean fait = false;
+            newFile[0][0] = file[0][0];
+            newFile[0][1] = file[0][1];
+            for(int i1 = 1; i1 < length(file, 1); i1 ++){ //copie le fichier de base
+                if(score >= stringToInt(file[i1][1]) && !fait){ //ajoute le score du joueur a la place qu'il mérite (en cas d'égalité remplace l'ancien ;) )
                     newFile[i1][0] = pseudo;
-                    newFile[i1][1] = score;
+                    newFile[i1][1] = "" + score;
+                    fait = true;
                 } else{ //sinon remet les ancienne ligne
                     for(int j1 = 0; j1 < length(file, 2); j1 ++){
                         newFile[i][j1] = file[i][j1];
