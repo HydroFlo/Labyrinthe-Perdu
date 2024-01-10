@@ -253,23 +253,14 @@ class Labyrinthe extends Program{
                 afficheQuestion(q, true);
                 if(questionCorrect(q)){ //En cas de bonne réponse efface le monstre
                     Lab[positionL-1][positionC] = '.';
-                    j.score += 1;
-                    j.aJouee = true;
+                    addScoreMonstre(j);
                 } else {
-                    j.vie -= 10;
-                    j.aJouee = true;
+                    perteHP(j);
                 }
             }  else if(Lab[positionL-1][positionC] == 'B' && !j.aJouee){ //Si Monstre, affiche la question.
                 Question q = questionRandom(listeBoss, 0);
                 afficheQuestion(q, true);
-                if(questionCorrect(q)){ //En cas de bonne réponse efface le monstre
-                    j.bossVaincu = true;
-                    j.score += 30;
-                    j.aJouee = true;
-                } else {
-                    j.vie -= 10;
-                    j.aJouee = true;
-                }
+                updateBoss(q, j);
             } else if(Lab[positionL-1][positionC] == 'S'){
                 Lab[positionL][positionC] = '.';
                 return changeSalle(Lab, positionL-1, positionC, indiceSalle);
@@ -286,23 +277,14 @@ class Labyrinthe extends Program{
                 afficheQuestion(q, true);
                 if(questionCorrect(q)){ //En cas de bonne réponse efface le monstre
                     Lab[positionL+1][positionC] = '.';
-                    j.score += 1;
-                    j.aJouee = true;
+                    addScoreMonstre(j);
                 } else {
-                    j.vie -= 10;
-                    j.aJouee = true;
+                    perteHP(j);
                 }
             }  else if(Lab[positionL+1][positionC] == 'B'  && !j.aJouee){ //Si Monstre, affiche la question.
                 Question q = questionRandom(listeBoss, 0);
                 afficheQuestion(q, true);
-                if(questionCorrect(q)){ //En cas de bonne réponse efface le monstre
-                    j.bossVaincu = true;
-                    j.score += 30;
-                    j.aJouee = true;
-                } else {
-                    j.vie -= 10;
-                    j.aJouee = true;
-                }
+                updateBoss(q, j);
             } else if (Lab[positionL+1][positionC] == 'S'){
                 Lab[positionL][positionC] = '.';
                 return changeSalle(Lab, positionL+1, positionC, indiceSalle);
@@ -319,23 +301,14 @@ class Labyrinthe extends Program{
                 afficheQuestion(q, true);
                 if(questionCorrect(q)){ //En cas de bonne réponse efface le monstre
                     Lab[positionL][positionC-1] = '.';
-                    j.score += 1;
-                    j.aJouee = true;
+                    addScoreMonstre(j);
                 } else {
-                    j.vie -= 10;
-                    j.aJouee = true;
+                    perteHP(j);
                 }
             }  else if(Lab[positionL][positionC-1] == 'B'  && !j.aJouee){ //Si Monstre, affiche la question.
                 Question q = questionRandom(listeBoss, 0);
                 afficheQuestion(q, true);
-                if(questionCorrect(q)){ //En cas de bonne réponse efface le monstre
-                    j.bossVaincu = true;
-                    j.score += 30;
-                    j.aJouee = true;
-                } else {
-                    j.vie -= 10;
-                    j.aJouee = true;
-                }
+                updateBoss(q, j);
             }  else if (Lab[positionL][positionC-1] == 'S'){
                 Lab[positionL][positionC] = '.';
                 return changeSalle(Lab, positionL, positionC-1, indiceSalle);
@@ -352,23 +325,14 @@ class Labyrinthe extends Program{
                 afficheQuestion(q, true);
                 if(questionCorrect(q)){ //En cas de bonne réponse efface le monstre
                     Lab[positionL][positionC+1] = '.';
-                    j.score += 1;
-                    j.aJouee = true;
+                    addScoreMonstre(j);
                 } else {
-                    j.aJouee = true;
-                    j.vie -= 10;
+                    perteHP(j);
                 }
             }  else if(Lab[positionL][positionC+1] == 'B' && !j.aJouee){ //Si Monstre, affiche la question.
                 Question q = questionRandom(listeBoss, 0);
                 afficheQuestion(q, true);
-                if(questionCorrect(q)){ //En cas de bonne réponse efface le monstre
-                    j.aJouee = true;
-                    j.bossVaincu = true;
-                    j.score += 30;
-                } else {
-                    j.aJouee = true;
-                    j.vie -= 10;
-                }
+                updateBoss(q, j);
             }  else if (Lab[positionL][positionC+1] == 'S'){
                 Lab[positionL][positionC] = '.';
                 return changeSalle(Lab, positionL, positionC+1, indiceSalle);
@@ -376,6 +340,26 @@ class Labyrinthe extends Program{
             }
         }
         return new int[]{positionL, positionC};
+    }
+
+    void updateBoss(Question q, Joueur j){
+        if(questionCorrect(q)){ //En cas de bonne réponse ajoute 30 au score et indique que le boss est vaincu
+            j.aJouee = true;
+            j.bossVaincu = true;
+            j.score += 30;
+        } else {
+            perteHP(j);
+        }
+    }
+
+    void perteHP(Joueur j){
+        j.vie -= 10;
+        j.aJouee = true;
+    }
+
+    void addScoreMonstre(Joueur j){
+        j.score += 1;
+        j.aJouee = true;
     }
 
     String formatIntituler(String intituler, int tailleTotal, int tailleLigne){ //prend une chaine de caractère et la renvoie sous le format donné
@@ -499,7 +483,7 @@ class Labyrinthe extends Program{
             }
             println("####     " + file[i][0] + vide + file[i][1] + "       ####");
         }
-        println(readFile("ressources/img/fermeEntete.txt", true));
+        println(readFile("ressources/img/fermeScore.txt", true));
     }
 
     Question[] listeQuestion(String cheminFichier){ //Charge le csv des question et renvoie un tableau de question qui possède une Question par case
