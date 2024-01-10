@@ -250,7 +250,7 @@ class Labyrinthe extends Program{
                 Lab[positionL-1][positionC] = 'P';
                 return new int[]{positionL-1, positionC};
             } else if(Lab[positionL-1][positionC] == 'M' && !j.aJouee){ //Si Monstre, affiche la question.
-                Question q = questionRandom(liste, j.score);
+                Question q = questionRandom(liste);
                 afficheQuestion(q, true);
                 if(questionCorrect(q)){ //En cas de bonne réponse efface le monstre
                     Lab[positionL-1][positionC] = '.';
@@ -259,7 +259,7 @@ class Labyrinthe extends Program{
                     perteHP(j);
                 }
             }  else if(Lab[positionL-1][positionC] == 'B' && !j.aJouee){ //Si Monstre, affiche la question.
-                Question q = questionRandom(listeBoss, 0);
+                Question q = questionRandom(listeBoss);
                 afficheQuestion(q, true);
                 updateBoss(q, j);
             } else if(Lab[positionL-1][positionC] == 'S'){
@@ -274,7 +274,7 @@ class Labyrinthe extends Program{
                 Lab[positionL+1][positionC] = 'P';
                 return new int[]{positionL+1, positionC};
             } else if (Lab[positionL+1][positionC] == 'M' && !j.aJouee){
-                Question q = questionRandom(liste, j.score);
+                Question q = questionRandom(liste);
                 afficheQuestion(q, true);
                 if(questionCorrect(q)){ //En cas de bonne réponse efface le monstre
                     Lab[positionL+1][positionC] = '.';
@@ -283,7 +283,7 @@ class Labyrinthe extends Program{
                     perteHP(j);
                 }
             }  else if(Lab[positionL+1][positionC] == 'B'  && !j.aJouee){ //Si Monstre, affiche la question.
-                Question q = questionRandom(listeBoss, 0);
+                Question q = questionRandom(listeBoss);
                 afficheQuestion(q, true);
                 updateBoss(q, j);
             } else if (Lab[positionL+1][positionC] == 'S'){
@@ -298,7 +298,7 @@ class Labyrinthe extends Program{
                 Lab[positionL][positionC-1] = 'P';
                 return new int[]{positionL, positionC-1};
             } else if (Lab[positionL][positionC-1] == 'M' && !j.aJouee){
-                Question q = questionRandom(liste, j.score);
+                Question q = questionRandom(liste);
                 afficheQuestion(q, true);
                 if(questionCorrect(q)){ //En cas de bonne réponse efface le monstre
                     Lab[positionL][positionC-1] = '.';
@@ -307,7 +307,7 @@ class Labyrinthe extends Program{
                     perteHP(j);
                 }
             }  else if(Lab[positionL][positionC-1] == 'B'  && !j.aJouee){ //Si Monstre, affiche la question.
-                Question q = questionRandom(listeBoss, 0);
+                Question q = questionRandom(listeBoss);
                 afficheQuestion(q, true);
                 updateBoss(q, j);
             }  else if (Lab[positionL][positionC-1] == 'S'){
@@ -322,7 +322,7 @@ class Labyrinthe extends Program{
                 Lab[positionL][positionC+1] = 'P';
                 return new int[]{positionL, positionC+1};
             } else if (Lab[positionL][positionC+1] == 'M' && !j.aJouee){
-                Question q = questionRandom(liste, j.score);
+                Question q = questionRandom(liste);
                 afficheQuestion(q, true);
                 if(questionCorrect(q)){ //En cas de bonne réponse efface le monstre
                     Lab[positionL][positionC+1] = '.';
@@ -331,7 +331,7 @@ class Labyrinthe extends Program{
                     perteHP(j);
                 }
             }  else if(Lab[positionL][positionC+1] == 'B' && !j.aJouee){ //Si Monstre, affiche la question.
-                Question q = questionRandom(listeBoss, 0);
+                Question q = questionRandom(listeBoss);
                 afficheQuestion(q, true);
                 updateBoss(q, j);
             }  else if (Lab[positionL][positionC+1] == 'S'){
@@ -504,13 +504,9 @@ class Labyrinthe extends Program{
         assertEquals(test2.question, tabTest[length(tabTest)-1].question);
     }
 
-    Question questionRandom(Question[] liste, int nbUtilisees){
-        int choix = (int) (random()*(length(liste)-nbUtilisees));
-        Question res = liste[choix + nbUtilisees];
-        Question temp = liste[nbUtilisees];
-        liste[choix] = temp;
-        liste[nbUtilisees] = res;
-        return res;
+    Question questionRandom(Question[] liste){ //Choisie une question au hasard
+        int choix = (int) (random()*(length(liste)));
+        return liste[choix];
     }
 
     boolean questionCorrect(Question q){ //Vérifie si on donne la bonne réponse
@@ -546,7 +542,7 @@ class Labyrinthe extends Program{
         }
         return new int[]{0,0};
     }
-    void afficherSalle(int nbr){
+    void afficherSalle(int nbr){ //affiche la salle
         char[][] salle = genererSalle("ressources/Lab/Salle"+nbr);
         afficheLab(salle);
     }
@@ -587,7 +583,7 @@ class Labyrinthe extends Program{
         assertFalse(equals(tab1, tab4));
     }
 
-    boolean estInt(String verif){
+    boolean estInt(String verif){ //vérifie si la String entrée est un entier
         if(length(verif) == 0){
             return false;
         }
