@@ -6,8 +6,8 @@
 ####           Q = gauche                              D = droite           ####
 ####                                S = bas                                 ####
 ####                                                                        ####
-####     Si un chiffre (de 1 à 9) suis la lettre, vous vous déplacerez      ####
-####      de ce nombre de cases, sinon vous avancerez de 1 case             ####
+####     Si un chiffre (de 0 à 9) suis la lettre, vous vous déplacerez      ####
+####           d'autant de case, sinon vous avancerez de 1 case             ####
 ####                                                                        ####
 ####                        Information à l'écran :                         ####
 ####                                                                        ####
