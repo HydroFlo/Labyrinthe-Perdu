@@ -84,7 +84,7 @@ class Labyrinthe extends Program{
         String choix;
         do{
             choix = toLowerCase(readString());
-        }while(length(choix) != 1 && length(choix) != 2);
+        }while(length(choix) != 1 && length(choix) != 2 );
         return choix;
     }
 
@@ -267,7 +267,7 @@ class Labyrinthe extends Program{
                 } else {
                     j.vie -= 10;
                 }
-            }  else if(Lab[positionL-1][positionC] == 'B'){ //Si Monstre, affiche la question.
+            }  else if(Lab[positionL-1][positionC] == 'B' && !j.bossVaincu){ //Si Monstre, affiche la question.
                 Question q = questionRandom(listeBoss, 0);
                 afficheQuestion(q, true);
                 if(questionCorrect(q)){ //En cas de bonne réponse efface le monstre
@@ -296,7 +296,7 @@ class Labyrinthe extends Program{
                 } else {
                     j.vie -= 10;
                 }
-            }  else if(Lab[positionL+1][positionC] == 'B'){ //Si Monstre, affiche la question.
+            }  else if(Lab[positionL+1][positionC] == 'B' && !j.bossVaincu){ //Si Monstre, affiche la question.
                 Question q = questionRandom(listeBoss, 0);
                 afficheQuestion(q, true);
                 if(questionCorrect(q)){ //En cas de bonne réponse efface le monstre
@@ -325,7 +325,7 @@ class Labyrinthe extends Program{
                 } else {
                     j.vie -= 10;
                 }
-            }  else if(Lab[positionL][positionC-1] == 'B'){ //Si Monstre, affiche la question.
+            }  else if(Lab[positionL][positionC-1] == 'B' && !j.bossVaincu){ //Si Monstre, affiche la question.
                 Question q = questionRandom(listeBoss, 0);
                 afficheQuestion(q, true);
                 if(questionCorrect(q)){ //En cas de bonne réponse efface le monstre
@@ -354,7 +354,7 @@ class Labyrinthe extends Program{
                 } else {
                     j.vie -= 10;
                 }
-            }  else if(Lab[positionL][positionC+1] == 'B'){ //Si Monstre, affiche la question.
+            }  else if(Lab[positionL][positionC+1] == 'B' && !j.bossVaincu){ //Si Monstre, affiche la question.
                 Question q = questionRandom(listeBoss, 0);
                 afficheQuestion(q, true);
                 if(questionCorrect(q)){ //En cas de bonne réponse efface le monstre
@@ -493,6 +493,7 @@ class Labyrinthe extends Program{
             }
             println("####     " + file[i][0] + vide + file[i][1] + "       ####");
         }
+        println(readFile("ressources/img/fermeEntete.txt", true));
     }
 
     Question[] listeQuestion(String cheminFichier){ //Charge le csv des question et renvoie un tableau de question qui possède une Question par case
@@ -686,7 +687,7 @@ class Labyrinthe extends Program{
             int[] indiceP = indiceDe('P', salle);
             String choix = controleSaisie();
             int nbMove = 1;
-            if(length(choix) == 2){
+            if(length(choix) == 2 && estInt(substring(choix,1,2))){
                 nbMove = charToInt(charAt(choix,1));
             }
             for(int i = 0; i < nbMove; i ++){
