@@ -622,19 +622,14 @@ class Labyrinthe extends Program{
         return nbAjout;
     }
 
-    void algorithm(){
-        println("Quel taille voulez vous pour le labyrinthe (la taille sera en : N x N ) ?");
-        int tailleLab = nbFromString(3);
-        Salle[][] lab = genererLab(tailleLab); //genere le Layrinthe
-        String[][] questionTemp = load("ressources/ListeQuestion.csv");
-        String[][] tabScore = load("ressources/score.csv");
-        print("Voulez vous ajouter des question ? oui (o), non (autre) : ");
-        String ques =readString();
+    void updateCSVQuestion(Salle[][] lab, String cheminFichier){ //ajoute des questions (si demandé) dans le fichier mis en paramètre
+        String[][] questionTemp = load(cheminFichier);
+        String ques = readString();
         if(equals(toLowerCase(ques), "o")){
             print("Combien voulez vous en ajouter ? : ");
             int nbAjout = nbFromString(1);
             ajoutQuestion(questionTemp, nbAjout);
-            questionTemp = load("ressources/ListeQuestion.csv");
+            questionTemp = load(cheminFichier);
             afficheStringTab(questionTemp);
         }else if(equals(toLowerCase(ques), "p")){
             for(int i = 0; i<length(lab,1);i++){
@@ -643,6 +638,19 @@ class Labyrinthe extends Program{
                 }
             }
         }
+    }
+
+    void algorithm(){
+        println("Quel taille voulez vous pour le labyrinthe (la taille sera en : N x N ) ?");
+        int tailleLab = nbFromString(3);
+        Salle[][] lab = genererLab(tailleLab); //genere le Layrinthe
+        String[][] tabScore = load("ressources/score.csv");
+        print("Voulez vous ajouter des questions pour les monstres ? oui (o), non (autre) : ");
+        updateCSVQuestion(lab, "ressources/ListeQuestion.csv");
+
+        print("Voulez vous ajouter des questions pour le Boss ? oui (o), non (autre) : ");
+        updateCSVQuestion(lab, "ressources/ListeQuestionBoss.csv");
+
         Question[] lQuestion = listeQuestion("ressources/ListeQuestion.csv");
         Question[] lQuestionBoss = listeQuestion("ressources/ListeQuestionBoss.csv");
         
