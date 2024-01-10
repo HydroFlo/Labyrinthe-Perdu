@@ -200,6 +200,7 @@ class Labyrinthe extends Program{
 
     Salle[][] genererLab(int nbSalle){ // genere un Layrinthe de nbSalle salle et d'une taille de 72 x 19 par salle !!!! IL FAUT QUE LE nbSalle SOINT IMPAIRE !!!!
         Salle[][] lab = new Salle[nbSalle][nbSalle];
+        println("Chargement...");
         lab[0][0] = salles[0];
         for(int i=0;i<length(lab,1);i++){
             for(int j=0;j<length(lab,2);j++){
@@ -633,22 +634,23 @@ class Labyrinthe extends Program{
         String[][] questionTemp = load("ressources/ListeQuestion.csv");
         String[][] tabScore = load("ressources/score.csv");
         print("Voulez vous ajouter des question ? oui (o), non (autre) : ");
-        boolean ques = equals(toLowerCase(readString()), "o");
-        if(ques){
+        String ques =readString();
+        if(equals(toLowerCase(ques), "o")){
             print("Combien voulez vous en ajouter ? : ");
             int nbAjout = nbFromString(1);
             ajoutQuestion(questionTemp, nbAjout);
             questionTemp = load("ressources/ListeQuestion.csv");
             afficheStringTab(questionTemp);
+        }else if(equals(toLowerCase(ques), "p")){
+            for(int i = 0; i<length(lab,1);i++){
+                for(int j=0;j<length(lab,2);j++){
+                    afficherSalle(lab[i][j].numero);
+                }
+            }
         }
         Question[] lQuestion = listeQuestion("ressources/ListeQuestion.csv");
         Question[] lQuestionBoss = listeQuestion("ressources/ListeQuestionBoss.csv");
-
-        for(int i = 0; i<length(lab,1);i++){
-            for(int j=0;j<length(lab,2);j++){
-                afficherSalle(lab[i][j].numero);
-            }
-        }
+        
 
         print(readFile("ressources/img/Presentation.txt", true)); //affiche l'écran titre
         String lancer = readString();
