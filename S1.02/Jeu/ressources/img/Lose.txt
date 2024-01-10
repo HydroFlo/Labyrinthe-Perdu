@@ -12,7 +12,7 @@
 ####                                                                        ####
 ####                                                                        ####
 ####                                                                        ####
-####                                                                        ####
+####          Appuyer sur "S" pour afficher le tableau des scores           ####
 ####                                                                        ####
 ####                                                                        ####
 ####                                                                        ####
