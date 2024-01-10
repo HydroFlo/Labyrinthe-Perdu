@@ -137,12 +137,7 @@ class Labyrinthe extends Program{
         }
         if(j==length(lab,2)-1){
             droite = "0000";
-            println("DROITE");
         }
-        println(haut);
-        println(droite);
-        println(bas);
-        println(gauche);
         resultat = resultat + charAt(haut,2);
         resultat = resultat + charAt(droite,3);
         resultat = resultat + charAt(bas,0);
@@ -171,7 +166,6 @@ class Labyrinthe extends Program{
         //     resultat=resultat+'0';
         // }else{resultat=resultat+'.';}
 
-        println(resultat);
 
 
         if(equals(resultat,".000")||equals(resultat,"1000")){
@@ -187,15 +181,12 @@ class Labyrinthe extends Program{
         }else{
             int nbalea=(int)(random()*10);
             while(!equals(salles[nbalea].sorties,choixAlea(resultat))){
-                print("Salle vérifier : ");
-                println(salles[nbalea].sorties);
                 nbalea=(int)(random()*10);
                 //println(nbalea);
                 
             }
             lab[i][j]=salles[nbalea];
         }
-        println("FINI");
     }
 
     String choixAlea(String chaine){
@@ -204,7 +195,6 @@ class Labyrinthe extends Program{
                 chaine=substring(chaine,0,a)+(int)(random()*2)+substring(chaine,a+1,length(chaine));
             }
         }
-        println(chaine);
         return(chaine);
     }
 
@@ -248,7 +238,7 @@ class Labyrinthe extends Program{
         return new int[]{positionL, positionC};
     }
 
-    int[] deplacement(char[][] Lab, char direction, int positionL, int positionC, Joueur j, Question[] liste, Question[] listeBoss, int[] indiceSalle, boolean aJouee){ //vérifie si déplacement possible, si oui l'effectue
+    int[] deplacement(char[][] Lab, char direction, int positionL, int positionC, Joueur j, Question[] liste, Question[] listeBoss, int[] indiceSalle){ //vérifie si déplacement possible, si oui l'effectue
         if(direction == 'h'){
             afficheHelp();
         }
