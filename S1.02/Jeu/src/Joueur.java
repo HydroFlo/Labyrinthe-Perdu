@@ -3,4 +3,5 @@ class Joueur{
     int vie = 100;
     int score;
     boolean bossVaincu = false;
+    boolean aJouee = false;
 }
