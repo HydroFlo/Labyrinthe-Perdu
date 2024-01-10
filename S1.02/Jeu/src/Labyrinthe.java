@@ -408,7 +408,7 @@ class Labyrinthe extends Program{
         return tab;
     }
 
-    void ajoutQuestion(String[][] file, int nbAjout){ //Permet d'ajouter nbAjout nouvelle Question
+    void ajoutQuestion(String[][] file, int nbAjout, String cheminFichier){ //Permet d'ajouter nbAjout nouvelle Question
         String[][] newFile = new String[length(file, 1) + nbAjout][length(file, 2)];
         for(int i1 = 0; i1 < length(file, 1); i1 ++){ //copie le fichier de base
             for(int j1 = 0; j1 < length(file, 2); j1 ++){
@@ -423,7 +423,7 @@ class Labyrinthe extends Program{
             newFile[i][0]= intitu;
             newFile[i][1]= rep;
         }
-        saveCSV(newFile, "ressources/ListeQuestion.csv");
+        saveCSV(newFile, cheminFichier);
 
     }
 
@@ -628,9 +628,8 @@ class Labyrinthe extends Program{
         if(equals(toLowerCase(ques), "o")){
             print("Combien voulez vous en ajouter ? : ");
             int nbAjout = nbFromString(1);
-            ajoutQuestion(questionTemp, nbAjout);
+            ajoutQuestion(questionTemp, nbAjout, cheminFichier);
             questionTemp = load(cheminFichier);
-            afficheStringTab(questionTemp);
         }else if(equals(toLowerCase(ques), "p")){
             for(int i = 0; i<length(lab,1);i++){
                 for(int j=0;j<length(lab,2);j++){
@@ -645,6 +644,7 @@ class Labyrinthe extends Program{
         int tailleLab = nbFromString(3);
         Salle[][] lab = genererLab(tailleLab); //genere le Layrinthe
         String[][] tabScore = load("ressources/score.csv");
+        
         print("Voulez vous ajouter des questions pour les monstres ? oui (o), non (autre) : ");
         updateCSVQuestion(lab, "ressources/ListeQuestion.csv");
 
@@ -653,7 +653,6 @@ class Labyrinthe extends Program{
 
         Question[] lQuestion = listeQuestion("ressources/ListeQuestion.csv");
         Question[] lQuestionBoss = listeQuestion("ressources/ListeQuestionBoss.csv");
-        
 
         print(readFile("ressources/img/Presentation.txt", true)); //affiche l'écran titre
         String lancer = readString();
