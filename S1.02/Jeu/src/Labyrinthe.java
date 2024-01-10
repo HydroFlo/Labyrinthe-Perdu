@@ -101,7 +101,7 @@ class Labyrinthe extends Program{
         return lab;
     }
 
-    String veriferVoisins(Salle[][] lab, int i, int j){
+    String veriferVoisins(Salle[][] lab, int i, int j){ //renvoie les voisins d'une salle
         String resultat = "";
         if (i<length(lab,1) && i>=1 && lab[i-1][j]!=null){
             resultat = resultat + lab[i-1][j].sorties;
@@ -115,11 +115,10 @@ class Labyrinthe extends Program{
         if (j<length(lab,2)&& j>=1 && lab[i][j-1]!=null){
             resultat = resultat + lab[i][j-1].sorties;
         }else{resultat=resultat+"....";}
-        //println(resultat);
         return(resultat);
     }
 
-    void choisirSalle(Salle[][] lab, int i, int j){
+    void choisirSalle(Salle[][] lab, int i, int j){ //Choisie la salle à placer
         String resultat="";
         String check = veriferVoisins(lab,i,j);
         String haut = substring(check,0,4);
@@ -189,7 +188,7 @@ class Labyrinthe extends Program{
         }
     }
 
-    String choixAlea(String chaine){
+    String choixAlea(String chaine){ //Choisie aléatoirement les salles du labyrinthe
         for(int a = 0; a<4;a++){
             if(charAt(chaine,a)=='.'){
                 chaine=substring(chaine,0,a)+(int)(random()*2)+substring(chaine,a+1,length(chaine));
@@ -212,14 +211,14 @@ class Labyrinthe extends Program{
         return(lab);
     }
 
-    void afficheHelp(){
+    void afficheHelp(){ //affiche les contrôle du jeu
         print(readFile("ressources/img/Help", true));
         println("A tout moment dans la partie, appuyer sur \"H\" pour réafficher ce menu");
         println();
         readString();
     }
 
-    int[] changeSalle(char[][] Lab, int positionL, int positionC, int[] indiceSalle){
+    int[] changeSalle(char[][] Lab, int positionL, int positionC, int[] indiceSalle){ //renvoie la salle dans laquelle le joueur doit arriver
         if(positionC == 1){
             indiceSalle[1] -= 1;
             return new int[]{9, length(Lab, 2)-3};
@@ -244,7 +243,7 @@ class Labyrinthe extends Program{
             afficheHelp();
         }
         
-        if(direction == 'z' && positionL-1 >= 0 && Lab[positionL-1][positionC] != '@'){ //déplacement haut
+        if(direction == 'z' && positionL-1 >= 0 && Lab[positionL-1][positionC] != '@'){ //déplacement vers le haut
             if(Lab[positionL-1][positionC] == '.'){ //déplacement si case vide
                 Lab[positionL][positionC] = '.';
                 Lab[positionL-1][positionC] = 'P';
@@ -268,7 +267,7 @@ class Labyrinthe extends Program{
             }
         }
 
-        if(direction == 's' && positionL+1 < length(Lab, 1) && Lab[positionL+1][positionC] != '@'){ //déplacement bas
+        if(direction == 's' && positionL+1 < length(Lab, 1) && Lab[positionL+1][positionC] != '@'){ //déplacement vers le bas
             if(Lab[positionL+1][positionC] == '.'){ //déplacement si case vide
                 Lab[positionL][positionC] = '.';
                 Lab[positionL+1][positionC] = 'P';
@@ -292,7 +291,7 @@ class Labyrinthe extends Program{
             }
         }
 
-        if(direction == 'q' && positionC-1 >= 0 && Lab[positionL][positionC-1] != '@'){ //déplacement gauche
+        if(direction == 'q' && positionC-1 >= 0 && Lab[positionL][positionC-1] != '@'){ //déplacement vers la gauche
             if(Lab[positionL][positionC-1] == '.'){ //déplacement si case vide
                 Lab[positionL][positionC] = '.';
                 Lab[positionL][positionC-1] = 'P';
@@ -316,7 +315,7 @@ class Labyrinthe extends Program{
             }
         }
 
-        if(direction == 'd' && positionC+1 < length(Lab,2) && Lab[positionL][positionC+1] != '@'){ //déplacement droite
+        if(direction == 'd' && positionC+1 < length(Lab,2) && Lab[positionL][positionC+1] != '@'){ //déplacement vers la droite
             if(Lab[positionL][positionC+1] == '.'){ //déplacement si case vide
                 Lab[positionL][positionC] = '.';
                 Lab[positionL][positionC+1] = 'P';
@@ -343,7 +342,7 @@ class Labyrinthe extends Program{
         return new int[]{positionL, positionC};
     }
 
-    void updateBoss(Question q, Joueur j){
+    void updateBoss(Question q, Joueur j){ //Ajoute 30 pts au joueur et met fin au jeu s'il bat un boss, sinon lui enlève 10 pv
         if(questionCorrect(q)){ //En cas de bonne réponse ajoute 30 au score et indique que le boss est vaincu
             j.aJouee = true;
             j.bossVaincu = true;
@@ -353,12 +352,12 @@ class Labyrinthe extends Program{
         }
     }
 
-    void perteHP(Joueur j){
+    void perteHP(Joueur j){ //fait perdre 10 pv au joueur et indique qu'il a joué
         j.vie -= 10;
         j.aJouee = true;
     }
 
-    void addScoreMonstre(Joueur j){
+    void addScoreMonstre(Joueur j){ //Ajoute 1 au score en cas de victoire contre un monstre et indique qu'il a joué
         j.score += 1;
         j.aJouee = true;
     }
@@ -474,7 +473,7 @@ class Labyrinthe extends Program{
 
     }
 
-    void afficheScore(){
+    void afficheScore(){ //Affiche le tableau des scores
         String[][] file = load("ressources/score.csv");
         print(readFile("ressources/img/Score.txt", true));
         for(int i = 1; i < length(file,1); i ++){
